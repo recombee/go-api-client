@@ -1,0 +1,25 @@
+// This file is auto-generated
+
+package test
+
+import (
+	"testing"
+)
+
+func TestCreatePropertyBasedSegmentation(t *testing.T) {
+	var resp string
+	var resp2 interface{}
+	var err error
+	useVars(resp, resp2, err)
+
+	defaultTestSetUp(t)
+	client := createClient(t)
+
+	// it 'creates property based segmentation'
+	resp, err = client.NewCreatePropertyBasedSegmentation("seg1", "items", "str_property").SetTitle("Test Segmentation").SetDescription("For test purposes").Send()
+	if err != nil {
+		t.Fatal(err)
+	}
+	resp, err = client.NewCreatePropertyBasedSegmentation("seg1", "items", "str_property").SetTitle("Test Segmentation").SetDescription("For test purposes").Send()
+	checkErrorResponse(t, err, 409)
+}
