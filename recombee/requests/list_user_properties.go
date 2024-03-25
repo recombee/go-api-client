@@ -5,7 +5,7 @@ package requests
 import (
 	"context"
 	"fmt"
-	"github.com/recombee/go-api-client/recombee/bindings"
+	"github.com/recombee/go-api-client/v4/recombee/bindings"
 	"net/http"
 	timepkg "time" // avoid collision with param name
 )

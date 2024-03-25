@@ -3,7 +3,7 @@ package requests
 import (
 	"context"
 	"encoding/json"
-	"github.com/recombee/go-api-client/recombee/bindings"
+	"github.com/recombee/go-api-client/v4/recombee/bindings"
 	"net/http"
 	"time"
 )

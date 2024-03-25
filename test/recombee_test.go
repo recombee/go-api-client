@@ -2,9 +2,9 @@ package test
 
 import (
 	"fmt"
-	"github.com/recombee/go-api-client/recombee"
-	"github.com/recombee/go-api-client/recombee/errors"
-	"github.com/recombee/go-api-client/recombee/requests"
+	"github.com/recombee/go-api-client/v4/recombee"
+	"github.com/recombee/go-api-client/v4/recombee/errors"
+	"github.com/recombee/go-api-client/v4/recombee/requests"
 	"math/rand"
 	"net/http"
 	"os"

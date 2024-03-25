@@ -4,8 +4,8 @@ package test
 
 import (
 	"context"
-	"github.com/recombee/go-api-client/recombee/bindings"
-	"github.com/recombee/go-api-client/recombee/requests"
+	"github.com/recombee/go-api-client/v4/recombee/bindings"
+	"github.com/recombee/go-api-client/v4/recombee/requests"
 	"testing"
 )
 

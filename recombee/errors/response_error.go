@@ -2,7 +2,7 @@ package errors
 
 import (
 	"fmt"
-	"github.com/recombee/go-api-client/recombee/requests"
+	"github.com/recombee/go-api-client/v4/recombee/requests"
 )
 
 // ResponseError is returned when request did not succeed (did not return 200 or 201)

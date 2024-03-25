@@ -3,7 +3,7 @@
 package recombee
 
 import (
-	"github.com/recombee/go-api-client/recombee/requests"
+	"github.com/recombee/go-api-client/v4/recombee/requests"
 )
 
 // NewAddItem creates AddItem request.

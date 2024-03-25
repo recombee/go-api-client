@@ -10,7 +10,7 @@ Documentation of the API can be found at [docs.recombee.com](https://docs.recomb
 
 Run the following command in your Go project:
 ```
-go get github.com/recombee/go-api-client
+go get github.com/recombee/go-api-client/v4@4.1.0
 ```
 
 ## Examples
@@ -29,8 +29,8 @@ import (
     "math/rand"
     "os"
 
-    "github.com/recombee/go-api-client/recombee"
-    "github.com/recombee/go-api-client/recombee/requests"
+    "github.com/recombee/go-api-client/v4/recombee"
+    "github.com/recombee/go-api-client/v4/recombee/requests"
 )
 
 func main() {
@@ -111,8 +111,8 @@ package main
 import (
     "context"
     "fmt"
-    "github.com/recombee/go-api-client/recombee"
-    "github.com/recombee/go-api-client/recombee/requests"
+    "github.com/recombee/go-api-client/v4/recombee"
+    "github.com/recombee/go-api-client/v4/recombee/requests"
     "math/rand"
     "os"
     "time"
