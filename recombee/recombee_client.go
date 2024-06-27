@@ -16,6 +16,7 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -142,8 +143,14 @@ func (client *RecombeeClient) SendRequestWithContext(ctx context.Context, reques
 
 	queryParams := parsedUrl.Query()
 	for key, value := range request.QueryParameters {
-		queryParams.Set(key, fmt.Sprintf("%v", value))
+		switch v := value.(type) {
+		case []string:
+			queryParams.Set(key, strings.Join(v, ","))
+		default:
+			queryParams.Set(key, fmt.Sprintf("%v", value))
+		}
 	}
+
 	parsedUrl.RawQuery = queryParams.Encode()
 	urlWithParams := fmt.Sprintf("/%v%v", client.databaseId, parsedUrl.String())
 	signedUrl, err := client.signUrlStr(urlWithParams)
@@ -171,7 +178,7 @@ func (client *RecombeeClient) SendRequestWithContext(ctx context.Context, reques
 
 	// Set necessary headers
 	httpRequest.Header.Set("Content-Type", "application/json")
-	httpRequest.Header.Set("User-Agent", "recombee-go-api-client/4.1.0")
+	httpRequest.Header.Set("User-Agent", "recombee-go-api-client/4.1.1")
 
 	start := time.Now()
 	// Send the request
