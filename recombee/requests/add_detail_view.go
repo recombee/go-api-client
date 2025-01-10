@@ -32,7 +32,7 @@ func NewAddDetailView(client ApiClient, userId string, itemId string) *AddDetail
 			Path:            fmt.Sprintf("/detailviews/"),
 			BodyParameters:  bodyParameters,
 			QueryParameters: queryParams,
-			DefaultTimeout:  1000 * timepkg.Millisecond,
+			DefaultTimeout:  3000 * timepkg.Millisecond,
 			Target:          new(string),
 		},
 		client,

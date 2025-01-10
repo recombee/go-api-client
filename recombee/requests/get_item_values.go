@@ -29,7 +29,7 @@ func NewGetItemValues(client ApiClient, itemId string) *GetItemValues {
 			Path:            fmt.Sprintf("/items/%s", itemId),
 			BodyParameters:  bodyParameters,
 			QueryParameters: queryParams,
-			DefaultTimeout:  1000 * timepkg.Millisecond,
+			DefaultTimeout:  3000 * timepkg.Millisecond,
 			Target:          new(map[string]interface{}),
 		},
 		client,

@@ -3,7 +3,7 @@
 package test
 
 import (
-	"github.com/recombee/go-api-client/v4/recombee/bindings"
+	"github.com/recombee/go-api-client/v5/recombee/bindings"
 	"testing"
 )
 

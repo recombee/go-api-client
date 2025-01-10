@@ -17,15 +17,14 @@ type RemoveFromSeries struct {
 
 // NewRemoveFromSeries creates RemoveFromSeries request.
 // Removes an existing series item from the series.
-func NewRemoveFromSeries(client ApiClient, seriesId string, itemType string, itemId string, time float64) *RemoveFromSeries {
+func NewRemoveFromSeries(client ApiClient, seriesId string, itemType string, itemId string) *RemoveFromSeries {
 
-	bodyParameters := map[string]interface{}{}
-
-	queryParams := map[string]interface{}{
+	bodyParameters := map[string]interface{}{
 		"itemType": itemType,
 		"itemId":   itemId,
-		"time":     time,
 	}
+
+	queryParams := map[string]interface{}{}
 
 	return &RemoveFromSeries{
 		ApiRequest{
@@ -33,7 +32,7 @@ func NewRemoveFromSeries(client ApiClient, seriesId string, itemType string, ite
 			Path:            fmt.Sprintf("/series/%s/items/", seriesId),
 			BodyParameters:  bodyParameters,
 			QueryParameters: queryParams,
-			DefaultTimeout:  1000 * timepkg.Millisecond,
+			DefaultTimeout:  3000 * timepkg.Millisecond,
 			Target:          new(string),
 		},
 		client,

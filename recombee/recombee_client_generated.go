@@ -3,7 +3,7 @@
 package recombee
 
 import (
-	"github.com/recombee/go-api-client/v4/recombee/requests"
+	"github.com/recombee/go-api-client/v5/recombee/requests"
 )
 
 // NewAddItem creates AddItem request.
@@ -111,8 +111,8 @@ func (c *RecombeeClient) NewInsertToSeries(seriesId string, itemType string, ite
 
 // NewRemoveFromSeries creates RemoveFromSeries request.
 // Removes an existing series item from the series.
-func (c *RecombeeClient) NewRemoveFromSeries(seriesId string, itemType string, itemId string, time float64) *requests.RemoveFromSeries {
-	return requests.NewRemoveFromSeries(c, seriesId, itemType, itemId, time)
+func (c *RecombeeClient) NewRemoveFromSeries(seriesId string, itemType string, itemId string) *requests.RemoveFromSeries {
+	return requests.NewRemoveFromSeries(c, seriesId, itemType, itemId)
 }
 
 // NewAddUser creates AddUser request.
@@ -373,14 +373,14 @@ func (c *RecombeeClient) NewRecommendUsersToItem(itemId string, count int) *requ
 }
 
 // NewRecommendItemSegmentsToUser creates RecommendItemSegmentsToUser request.
-// Recommends the top Segments from a Segmentation for a particular user, based on the user's past interactions.
+// Recommends the top Segments from a [Segmentation](https://docs.recombee.com/segmentations.html) for a particular user, based on the user's past interactions.
 // Based on the used Segmentation, this endpoint can be used for example for:
 //   - Recommending the top categories for the user
 //   - Recommending the top genres for the user
 //   - Recommending the top brands for the user
 //   - Recommending the top artists for the user
 //
-// You need to set the used Segmentation the Admin UI in the Scenario settings prior to using this endpoint.
+// You need to set the used Segmentation the Admin UI in the [Scenario settings](https://docs.recombee.com/scenarios) prior to using this endpoint.
 // The returned segments are sorted by relevance (first segment being the most relevant).
 // It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
 func (c *RecombeeClient) NewRecommendItemSegmentsToUser(userId string, count int) *requests.RecommendItemSegmentsToUser {
@@ -388,14 +388,14 @@ func (c *RecombeeClient) NewRecommendItemSegmentsToUser(userId string, count int
 }
 
 // NewRecommendItemSegmentsToItem creates RecommendItemSegmentsToItem request.
-// Recommends Segments from a Segmentation that are the most relevant to a particular item.
+// Recommends Segments from a [Segmentation](https://docs.recombee.com/segmentations.html) that are the most relevant to a particular item.
 // Based on the used Segmentation, this endpoint can be used for example for:
 //   - Recommending the related categories
 //   - Recommending the related genres
 //   - Recommending the related brands
 //   - Recommending the related artists
 //
-// You need to set the used Segmentation the Admin UI in the Scenario settings prior to using this endpoint.
+// You need to set the used Segmentation the Admin UI in the [Scenario settings](https://docs.recombee.com/scenarios) prior to using this endpoint.
 // The returned segments are sorted by relevance (first segment being the most relevant).
 // It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
 func (c *RecombeeClient) NewRecommendItemSegmentsToItem(itemId string, targetUserId string, count int) *requests.RecommendItemSegmentsToItem {
@@ -403,17 +403,30 @@ func (c *RecombeeClient) NewRecommendItemSegmentsToItem(itemId string, targetUse
 }
 
 // NewRecommendItemSegmentsToItemSegment creates RecommendItemSegmentsToItemSegment request.
-// Recommends Segments from a result Segmentation that are the most relevant to a particular Segment from a context Segmentation.
+// Recommends Segments from a result [Segmentation](https://docs.recombee.com/segmentations.html) that are the most relevant to a particular Segment from a context Segmentation.
 // Based on the used Segmentations, this endpoint can be used for example for:
 //   - Recommending the related brands to particular brand
 //   - Recommending the related brands to particular category
 //   - Recommending the related artists to a particular genre (assuming songs are the Items)
 //
-// You need to set the used context and result Segmentation the Admin UI in the Scenario settings prior to using this endpoint.
+// You need to set the used context and result Segmentation the Admin UI in the [Scenario settings](https://docs.recombee.com/scenarios) prior to using this endpoint.
 // The returned segments are sorted by relevance (first segment being the most relevant).
 // It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
 func (c *RecombeeClient) NewRecommendItemSegmentsToItemSegment(contextSegmentId string, targetUserId string, count int) *requests.RecommendItemSegmentsToItemSegment {
 	return requests.NewRecommendItemSegmentsToItemSegment(c, contextSegmentId, targetUserId, count)
+}
+
+// NewRecommendItemsToItemSegment creates RecommendItemsToItemSegment request.
+// Recommends Items that are the most relevant to a particular Segment from a context [Segmentation](https://docs.recombee.com/segmentations.html).
+// Based on the used Segmentation, this endpoint can be used for example for:
+// - Recommending articles related to a particular topic
+// - Recommending songs belonging to a particular genre
+// - Recommending products produced by a particular brand
+// You need to set the used context Segmentation in the Admin UI in the [Scenario settings](https://docs.recombee.com/scenarios) prior to using this endpoint.
+// The returned items are sorted by relevance (the first item being the most relevant).
+// It is also possible to use the POST HTTP method (for example, in the case of a very long ReQL filter) — query parameters then become body parameters.
+func (c *RecombeeClient) NewRecommendItemsToItemSegment(contextSegmentId string, targetUserId string, count int) *requests.RecommendItemsToItemSegment {
+	return requests.NewRecommendItemsToItemSegment(c, contextSegmentId, targetUserId, count)
 }
 
 // NewSearchItems creates SearchItems request.

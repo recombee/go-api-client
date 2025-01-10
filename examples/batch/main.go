@@ -3,9 +3,9 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/recombee/go-api-client/v4/recombee"
-	"github.com/recombee/go-api-client/v4/recombee/bindings"
-	"github.com/recombee/go-api-client/v4/recombee/requests"
+	"github.com/recombee/go-api-client/v5/recombee"
+	"github.com/recombee/go-api-client/v5/recombee/bindings"
+	"github.com/recombee/go-api-client/v5/recombee/requests"
 	"os"
 )
 

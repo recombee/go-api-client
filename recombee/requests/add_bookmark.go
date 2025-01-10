@@ -32,7 +32,7 @@ func NewAddBookmark(client ApiClient, userId string, itemId string) *AddBookmark
 			Path:            fmt.Sprintf("/bookmarks/"),
 			BodyParameters:  bodyParameters,
 			QueryParameters: queryParams,
-			DefaultTimeout:  1000 * timepkg.Millisecond,
+			DefaultTimeout:  3000 * timepkg.Millisecond,
 			Target:          new(string),
 		},
 		client,

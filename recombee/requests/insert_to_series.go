@@ -33,7 +33,7 @@ func NewInsertToSeries(client ApiClient, seriesId string, itemType string, itemI
 			Path:            fmt.Sprintf("/series/%s/items/", seriesId),
 			BodyParameters:  bodyParameters,
 			QueryParameters: queryParams,
-			DefaultTimeout:  1000 * timepkg.Millisecond,
+			DefaultTimeout:  3000 * timepkg.Millisecond,
 			Target:          new(string),
 		},
 		client,
@@ -41,7 +41,7 @@ func NewInsertToSeries(client ApiClient, seriesId string, itemType string, itemI
 }
 
 // SetCascadeCreate sets the cascadeCreate parameter.
-// Indicates that any non-existing entity specified within the request should be created (as if corresponding PUT requests were invoked). This concerns both the `seriesId` and the `itemId`. If `cascadeCreate` is set to true, the behavior also depends on the `itemType`. Either item or series may be created if not present in the database.
+// Indicates that any non-existing entity specified within the request should be created (as if corresponding PUT requests were invoked). This concerns both the `seriesId` and the `itemId`. If `cascadeCreate` is set to true, the behavior also depends on the `itemType`. In case of `item`, an item is created, in case of `series` a series + corresponding item with the same ID is created.
 func (r *InsertToSeries) SetCascadeCreate(cascadeCreate bool) *InsertToSeries {
 	r.BodyParameters["cascadeCreate"] = cascadeCreate
 	return r

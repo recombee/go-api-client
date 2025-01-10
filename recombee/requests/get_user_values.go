@@ -29,7 +29,7 @@ func NewGetUserValues(client ApiClient, userId string) *GetUserValues {
 			Path:            fmt.Sprintf("/users/%s", userId),
 			BodyParameters:  bodyParameters,
 			QueryParameters: queryParams,
-			DefaultTimeout:  1000 * timepkg.Millisecond,
+			DefaultTimeout:  3000 * timepkg.Millisecond,
 			Target:          new(map[string]interface{}),
 		},
 		client,

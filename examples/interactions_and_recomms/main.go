@@ -5,8 +5,8 @@ import (
 	"math/rand"
 	"os"
 
-	"github.com/recombee/go-api-client/v4/recombee"
-	"github.com/recombee/go-api-client/v4/recombee/requests"
+	"github.com/recombee/go-api-client/v5/recombee"
+	"github.com/recombee/go-api-client/v5/recombee/requests"
 )
 
 func main() {

@@ -5,7 +5,7 @@ package requests
 import (
 	"context"
 	"fmt"
-	"github.com/recombee/go-api-client/v4/recombee/bindings"
+	"github.com/recombee/go-api-client/v5/recombee/bindings"
 	"net/http"
 	timepkg "time" // avoid collision with param name
 )
@@ -30,7 +30,7 @@ func NewGetItemPropertyInfo(client ApiClient, propertyName string) *GetItemPrope
 			Path:            fmt.Sprintf("/items/properties/%s", propertyName),
 			BodyParameters:  bodyParameters,
 			QueryParameters: queryParams,
-			DefaultTimeout:  1000 * timepkg.Millisecond,
+			DefaultTimeout:  3000 * timepkg.Millisecond,
 			Target:          new(bindings.PropertyInfo),
 		},
 		client,

@@ -32,7 +32,7 @@ func NewAddPurchase(client ApiClient, userId string, itemId string) *AddPurchase
 			Path:            fmt.Sprintf("/purchases/"),
 			BodyParameters:  bodyParameters,
 			QueryParameters: queryParams,
-			DefaultTimeout:  1000 * timepkg.Millisecond,
+			DefaultTimeout:  3000 * timepkg.Millisecond,
 			Target:          new(string),
 		},
 		client,

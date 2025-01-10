@@ -32,7 +32,7 @@ func NewDeleteCartAddition(client ApiClient, userId string, itemId string) *Dele
 			Path:            fmt.Sprintf("/cartadditions/"),
 			BodyParameters:  bodyParameters,
 			QueryParameters: queryParams,
-			DefaultTimeout:  1000 * timepkg.Millisecond,
+			DefaultTimeout:  3000 * timepkg.Millisecond,
 			Target:          new(string),
 		},
 		client,

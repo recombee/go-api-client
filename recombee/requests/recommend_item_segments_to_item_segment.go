@@ -5,18 +5,18 @@ package requests
 import (
 	"context"
 	"fmt"
-	"github.com/recombee/go-api-client/v4/recombee/bindings"
+	"github.com/recombee/go-api-client/v5/recombee/bindings"
 	"net/http"
 	timepkg "time" // avoid collision with param name
 )
 
-// RecommendItemSegmentsToItemSegment Recommends Segments from a result Segmentation that are the most relevant to a particular Segment from a context Segmentation.
+// RecommendItemSegmentsToItemSegment Recommends Segments from a result [Segmentation](https://docs.recombee.com/segmentations.html) that are the most relevant to a particular Segment from a context Segmentation.
 // Based on the used Segmentations, this endpoint can be used for example for:
 //   - Recommending the related brands to particular brand
 //   - Recommending the related brands to particular category
 //   - Recommending the related artists to a particular genre (assuming songs are the Items)
 //
-// You need to set the used context and result Segmentation the Admin UI in the Scenario settings prior to using this endpoint.
+// You need to set the used context and result Segmentation the Admin UI in the [Scenario settings](https://docs.recombee.com/scenarios) prior to using this endpoint.
 // The returned segments are sorted by relevance (first segment being the most relevant).
 // It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
 type RecommendItemSegmentsToItemSegment struct {
@@ -25,13 +25,13 @@ type RecommendItemSegmentsToItemSegment struct {
 }
 
 // NewRecommendItemSegmentsToItemSegment creates RecommendItemSegmentsToItemSegment request.
-// Recommends Segments from a result Segmentation that are the most relevant to a particular Segment from a context Segmentation.
+// Recommends Segments from a result [Segmentation](https://docs.recombee.com/segmentations.html) that are the most relevant to a particular Segment from a context Segmentation.
 // Based on the used Segmentations, this endpoint can be used for example for:
 //   - Recommending the related brands to particular brand
 //   - Recommending the related brands to particular category
 //   - Recommending the related artists to a particular genre (assuming songs are the Items)
 //
-// You need to set the used context and result Segmentation the Admin UI in the Scenario settings prior to using this endpoint.
+// You need to set the used context and result Segmentation the Admin UI in the [Scenario settings](https://docs.recombee.com/scenarios) prior to using this endpoint.
 // The returned segments are sorted by relevance (first segment being the most relevant).
 // It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
 func NewRecommendItemSegmentsToItemSegment(client ApiClient, contextSegmentId string, targetUserId string, count int) *RecommendItemSegmentsToItemSegment {

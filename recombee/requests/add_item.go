@@ -31,7 +31,7 @@ func NewAddItem(client ApiClient, itemId string) *AddItem {
 			Path:            fmt.Sprintf("/items/%s", itemId),
 			BodyParameters:  bodyParameters,
 			QueryParameters: queryParams,
-			DefaultTimeout:  1000 * timepkg.Millisecond,
+			DefaultTimeout:  3000 * timepkg.Millisecond,
 			Target:          new(string),
 		},
 		client,

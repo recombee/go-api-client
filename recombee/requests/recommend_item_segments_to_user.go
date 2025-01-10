@@ -5,19 +5,19 @@ package requests
 import (
 	"context"
 	"fmt"
-	"github.com/recombee/go-api-client/v4/recombee/bindings"
+	"github.com/recombee/go-api-client/v5/recombee/bindings"
 	"net/http"
 	timepkg "time" // avoid collision with param name
 )
 
-// RecommendItemSegmentsToUser Recommends the top Segments from a Segmentation for a particular user, based on the user's past interactions.
+// RecommendItemSegmentsToUser Recommends the top Segments from a [Segmentation](https://docs.recombee.com/segmentations.html) for a particular user, based on the user's past interactions.
 // Based on the used Segmentation, this endpoint can be used for example for:
 //   - Recommending the top categories for the user
 //   - Recommending the top genres for the user
 //   - Recommending the top brands for the user
 //   - Recommending the top artists for the user
 //
-// You need to set the used Segmentation the Admin UI in the Scenario settings prior to using this endpoint.
+// You need to set the used Segmentation the Admin UI in the [Scenario settings](https://docs.recombee.com/scenarios) prior to using this endpoint.
 // The returned segments are sorted by relevance (first segment being the most relevant).
 // It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
 type RecommendItemSegmentsToUser struct {
@@ -26,14 +26,14 @@ type RecommendItemSegmentsToUser struct {
 }
 
 // NewRecommendItemSegmentsToUser creates RecommendItemSegmentsToUser request.
-// Recommends the top Segments from a Segmentation for a particular user, based on the user's past interactions.
+// Recommends the top Segments from a [Segmentation](https://docs.recombee.com/segmentations.html) for a particular user, based on the user's past interactions.
 // Based on the used Segmentation, this endpoint can be used for example for:
 //   - Recommending the top categories for the user
 //   - Recommending the top genres for the user
 //   - Recommending the top brands for the user
 //   - Recommending the top artists for the user
 //
-// You need to set the used Segmentation the Admin UI in the Scenario settings prior to using this endpoint.
+// You need to set the used Segmentation the Admin UI in the [Scenario settings](https://docs.recombee.com/scenarios) prior to using this endpoint.
 // The returned segments are sorted by relevance (first segment being the most relevant).
 // It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
 func NewRecommendItemSegmentsToUser(client ApiClient, userId string, count int) *RecommendItemSegmentsToUser {

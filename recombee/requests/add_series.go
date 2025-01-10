@@ -29,11 +29,18 @@ func NewAddSeries(client ApiClient, seriesId string) *AddSeries {
 			Path:            fmt.Sprintf("/series/%s", seriesId),
 			BodyParameters:  bodyParameters,
 			QueryParameters: queryParams,
-			DefaultTimeout:  1000 * timepkg.Millisecond,
+			DefaultTimeout:  3000 * timepkg.Millisecond,
 			Target:          new(string),
 		},
 		client,
 	}
+}
+
+// SetCascadeCreate sets the cascadeCreate parameter.
+// If set to `true`, the item will be created with the same ID as the series. Default is `true`.
+func (r *AddSeries) SetCascadeCreate(cascadeCreate bool) *AddSeries {
+	r.BodyParameters["cascadeCreate"] = cascadeCreate
+	return r
 }
 
 // Sends the request to the Recombee API using the specified Context

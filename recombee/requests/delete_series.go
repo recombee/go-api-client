@@ -31,11 +31,18 @@ func NewDeleteSeries(client ApiClient, seriesId string) *DeleteSeries {
 			Path:            fmt.Sprintf("/series/%s", seriesId),
 			BodyParameters:  bodyParameters,
 			QueryParameters: queryParams,
-			DefaultTimeout:  1000 * timepkg.Millisecond,
+			DefaultTimeout:  3000 * timepkg.Millisecond,
 			Target:          new(string),
 		},
 		client,
 	}
+}
+
+// SetCascadeDelete sets the cascadeDelete parameter.
+// If set to `true`, item with the same ID as seriesId will be also deleted. Default is `false`.
+func (r *DeleteSeries) SetCascadeDelete(cascadeDelete bool) *DeleteSeries {
+	r.BodyParameters["cascadeDelete"] = cascadeDelete
+	return r
 }
 
 // Sends the request to the Recombee API using the specified Context
