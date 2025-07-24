@@ -10,8 +10,7 @@ import (
 	timepkg "time" // avoid collision with param name
 )
 
-// SearchItemSegments
-// Full-text personalized search that returns Segments from a Segmentation. The results are based on the provided `searchQuery` and also on the user's past interactions (purchases, ratings, etc.).
+// SearchItemSegments Full-text personalized search that returns Segments from a Segmentation. The results are based on the provided `searchQuery` and also on the user's past interactions (purchases, ratings, etc.).
 // Based on the used Segmentation, this endpoint can be used for example for:
 //   - Searching within categories or brands
 //   - Searching within genres or artists
@@ -59,7 +58,7 @@ func NewSearchItemSegments(client ApiClient, userId string, searchQuery string, 
 
 // SetScenario sets the scenario parameter.
 // Scenario defines a particular application of recommendations. It can be, for example, "homepage", "cart", or "emailing".
-// You can set various settings to the [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com). You can also see the performance of each scenario in the Admin UI separately, so you can check how well each application performs.
+// You can set various settings to the [scenario](https://docs.recombee.com/scenarios) in the [Admin UI](https://admin.recombee.com). You can also see the performance of each scenario in the Admin UI separately, so you can check how well each application performs.
 // The AI that optimizes models to get the best results may optimize different scenarios separately or even use different models in each of the scenarios.
 func (r *SearchItemSegments) SetScenario(scenario string) *SearchItemSegments {
 	r.BodyParameters["scenario"] = scenario
@@ -74,14 +73,14 @@ func (r *SearchItemSegments) SetCascadeCreate(cascadeCreate bool) *SearchItemSeg
 }
 
 // SetFilter sets the filter parameter.
-// Boolean-returning [ReQL](https://docs.recombee.com/reql.html) expression which allows you to filter recommended segments based on the `segmentationId`.
+// Boolean-returning [ReQL](https://docs.recombee.com/reql) expression which allows you to filter recommended segments based on the `segmentationId`.
 func (r *SearchItemSegments) SetFilter(filter string) *SearchItemSegments {
 	r.BodyParameters["filter"] = filter
 	return r
 }
 
 // SetBooster sets the booster parameter.
-// Number-returning [ReQL](https://docs.recombee.com/reql.html) expression which allows you to boost recommendation rate of some segments based on the `segmentationId`.
+// Number-returning [ReQL](https://docs.recombee.com/reql) expression which allows you to boost recommendation rate of some segments based on the `segmentationId`.
 func (r *SearchItemSegments) SetBooster(booster string) *SearchItemSegments {
 	r.BodyParameters["booster"] = booster
 	return r
@@ -89,9 +88,9 @@ func (r *SearchItemSegments) SetBooster(booster string) *SearchItemSegments {
 
 // SetLogic sets the logic parameter.
 // Logic specifies the particular behavior of the recommendation models. You can pick tailored logic for your domain and use case.
-// See [this section](https://docs.recombee.com/recommendation_logics.html) for a list of available logics and other details.
+// See [this section](https://docs.recombee.com/recommendation_logics) for a list of available logics and other details.
 // The difference between `logic` and `scenario` is that `logic` specifies mainly behavior, while `scenario` specifies the place where recommendations are shown to the users.
-// Logic can also be set to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
+// Logic can also be set to a [scenario](https://docs.recombee.com/scenarios) in the [Admin UI](https://admin.recombee.com).
 func (r *SearchItemSegments) SetLogic(logic bindings.Logic) *SearchItemSegments {
 	r.BodyParameters["logic"] = logic
 	return r

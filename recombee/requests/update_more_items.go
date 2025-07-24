@@ -13,7 +13,7 @@ import (
 // UpdateMoreItems Updates (some) property values of all the items that pass the filter.
 // Example: *Setting all the items that are older than a week as unavailable*
 //
-//	```
+//	```json
 //	  {
 //	    "filter": "'releaseDate' < now() - 7*24*3600",
 //	    "changes": {"available": false}
@@ -28,7 +28,7 @@ type UpdateMoreItems struct {
 // Updates (some) property values of all the items that pass the filter.
 // Example: *Setting all the items that are older than a week as unavailable*
 //
-//	```
+//	```json
 //	  {
 //	    "filter": "'releaseDate' < now() - 7*24*3600",
 //	    "changes": {"available": false}

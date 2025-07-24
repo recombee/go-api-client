@@ -50,7 +50,7 @@ func (r *SetViewPortion) SetSessionId(sessionId string) *SetViewPortion {
 }
 
 // SetTimestamp sets the timestamp parameter.
-// UTC timestamp of the rating as ISO8601-1 pattern or UTC epoch time. The default value is the current time.
+// UTC timestamp of the view portion as ISO8601-1 pattern or UTC epoch time. The default value is the current time.
 func (r *SetViewPortion) SetTimestamp(timestamp timepkg.Time) *SetViewPortion {
 	r.BodyParameters["timestamp"] = timestamp.Unix()
 	return r

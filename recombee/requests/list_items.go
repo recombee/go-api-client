@@ -38,7 +38,7 @@ func NewListItems(client ApiClient) *ListItems {
 }
 
 // SetFilter sets the filter parameter.
-// Boolean-returning [ReQL](https://docs.recombee.com/reql.html) expression, which allows you to filter items to be listed. Only the items for which the expression is *true* will be returned.
+// Boolean-returning [ReQL](https://docs.recombee.com/reql) expression, which allows you to filter items to be listed. Only the items for which the expression is *true* will be returned.
 func (r *ListItems) SetFilter(filter string) *ListItems {
 	r.QueryParameters["filter"] = filter
 	return r
@@ -61,7 +61,7 @@ func (r *ListItems) SetOffset(offset int) *ListItems {
 // SetReturnProperties sets the returnProperties parameter.
 // With `returnProperties=true`, property values of the listed items are returned along with their IDs in a JSON dictionary.
 // Example response:
-// ```
+// ```json
 //
 //	[
 //	  {
@@ -89,7 +89,7 @@ func (r *ListItems) SetReturnProperties(returnProperties bool) *ListItems {
 // SetIncludedProperties sets the includedProperties parameter.
 // Allows specifying which properties should be returned when `returnProperties=true` is set. The properties are given as a comma-separated list.
 // Example response for `includedProperties=description,price`:
-// ```
+// ```json
 //
 //	[
 //	  {

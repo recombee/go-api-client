@@ -9,7 +9,7 @@ import (
 	timepkg "time" // avoid collision with param name
 )
 
-// CreateManualReqlSegmentation Segment the items using multiple [ReQL](https://docs.recombee.com/reql.html) filters.
+// CreateManualReqlSegmentation Segment the items using multiple [ReQL](https://docs.recombee.com/reql) filters.
 // Use the Add Manual ReQL Items Segment endpoint to create the individual segments.
 type CreateManualReqlSegmentation struct {
 	ApiRequest
@@ -17,7 +17,7 @@ type CreateManualReqlSegmentation struct {
 }
 
 // NewCreateManualReqlSegmentation creates CreateManualReqlSegmentation request.
-// Segment the items using multiple [ReQL](https://docs.recombee.com/reql.html) filters.
+// Segment the items using multiple [ReQL](https://docs.recombee.com/reql) filters.
 // Use the Add Manual ReQL Items Segment endpoint to create the individual segments.
 func NewCreateManualReqlSegmentation(client ApiClient, segmentationId string, sourceType string) *CreateManualReqlSegmentation {
 

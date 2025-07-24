@@ -10,7 +10,7 @@ Documentation of the API can be found at [docs.recombee.com](https://docs.recomb
 
 Run the following command in your Go project:
 ```
-go get github.com/recombee/go-api-client/v5@v5.0.0
+go get github.com/recombee/go-api-client/v5@v5.1.0
 ```
 
 ## Examples

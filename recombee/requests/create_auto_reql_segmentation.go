@@ -9,7 +9,7 @@ import (
 	timepkg "time" // avoid collision with param name
 )
 
-// CreateAutoReqlSegmentation Segment the items using a [ReQL](https://docs.recombee.com/reql.html) expression.
+// CreateAutoReqlSegmentation Segment the items using a [ReQL](https://docs.recombee.com/reql) expression.
 // For each item, the expression should return a set that contains IDs of segments to which the item belongs to.
 type CreateAutoReqlSegmentation struct {
 	ApiRequest
@@ -17,7 +17,7 @@ type CreateAutoReqlSegmentation struct {
 }
 
 // NewCreateAutoReqlSegmentation creates CreateAutoReqlSegmentation request.
-// Segment the items using a [ReQL](https://docs.recombee.com/reql.html) expression.
+// Segment the items using a [ReQL](https://docs.recombee.com/reql) expression.
 // For each item, the expression should return a set that contains IDs of segments to which the item belongs to.
 func NewCreateAutoReqlSegmentation(client ApiClient, segmentationId string, sourceType string, expression string) *CreateAutoReqlSegmentation {
 

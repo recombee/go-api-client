@@ -16,7 +16,7 @@ func (c *RecombeeClient) NewAddItem(itemId string) *requests.AddItem {
 // NewDeleteItem creates DeleteItem request.
 // Deletes an item of the given `itemId` from the catalog.
 // If there are any *purchases*, *ratings*, *bookmarks*, *cart additions*, or *detail views* of the item present in the database, they will be deleted in cascade as well. Also, if the item is present in some *series*, it will be removed from all the *series* where present.
-// If an item becomes obsolete/no longer available, it is meaningful to keep it in the catalog (along with all the interaction data, which are very useful), and **only exclude the item from recommendations**. In such a case, use [ReQL filter](https://docs.recombee.com/reql.html) instead of deleting the item completely.
+// If an item becomes obsolete/no longer available, it is meaningful to keep it in the catalog (along with all the interaction data, which are very useful), and **only exclude the item from recommendations**. In such a case, use [ReQL filter](https://docs.recombee.com/reql) instead of deleting the item completely.
 func (c *RecombeeClient) NewDeleteItem(itemId string) *requests.DeleteItem {
 	return requests.NewDeleteItem(c, itemId)
 }
@@ -61,7 +61,7 @@ func (c *RecombeeClient) NewListItemProperties() *requests.ListItemProperties {
 // Updates (some) property values of all the items that pass the filter.
 // Example: *Setting all the items that are older than a week as unavailable*
 //
-//	```
+//	```json
 //	  {
 //	    "filter": "'releaseDate' < now() - 7*24*3600",
 //	    "changes": {"available": false}
@@ -73,7 +73,7 @@ func (c *RecombeeClient) NewUpdateMoreItems(filter string, changes map[string]in
 
 // NewDeleteMoreItems creates DeleteMoreItems request.
 // Deletes all the items that pass the filter.
-// If an item becomes obsolete/no longer available, it is meaningful to **keep it in the catalog** (along with all the interaction data, which are very useful) and **only exclude the item from recommendations**. In such a case, use [ReQL filter](https://docs.recombee.com/reql.html) instead of deleting the item completely.
+// If an item becomes obsolete/no longer available, it is meaningful to **keep it in the catalog** (along with all the interaction data, which are very useful) and **only exclude the item from recommendations**. In such a case, use [ReQL filter](https://docs.recombee.com/reql) instead of deleting the item completely.
 func (c *RecombeeClient) NewDeleteMoreItems(filter string) *requests.DeleteMoreItems {
 	return requests.NewDeleteMoreItems(c, filter)
 }
@@ -137,6 +137,8 @@ func (c *RecombeeClient) NewGetUserValues(userId string) *requests.GetUserValues
 // NewMergeUsers creates MergeUsers request.
 // Merges interactions (purchases, ratings, bookmarks, detail views ...) of two different users under a single user ID. This is especially useful for online e-commerce applications working with anonymous users identified by unique tokens such as the session ID. In such applications, it may often happen that a user owns a persistent account, yet accesses the system anonymously while, e.g., putting items into a shopping cart. At some point in time, such as when the user wishes to confirm the purchase, (s)he logs into the system using his/her username and password. The interactions made under anonymous session ID then become connected with the persistent account, and merging these two becomes desirable.
 // Merging happens between two users referred to as the *target* and the *source*. After the merge, all the interactions of the source user are attributed to the target user, and the source user is **deleted**.
+// By default, the *Merge Users* request is only available from server-side integrations for security reasons, to prevent potential abuse.
+// If you need to call this request from a client-side environment (such as a web or mobile app), please contact our support and request access to enable this feature for your database.
 func (c *RecombeeClient) NewMergeUsers(targetUserId string, sourceUserId string) *requests.MergeUsers {
 	return requests.NewMergeUsers(c, targetUserId, sourceUserId)
 }
@@ -321,8 +323,8 @@ func (c *RecombeeClient) NewListUserViewPortions(userId string) *requests.ListUs
 // The most typical use cases are recommendations on the homepage, in some "Picked just for you" section, or in email.
 // The returned items are sorted by relevance (the first item being the most relevant).
 // Besides the recommended items, also a unique `recommId` is returned in the response. It can be used to:
-// - Let Recombee know that this recommendation was successful (e.g., user clicked one of the recommended items). See [Reported metrics](https://docs.recombee.com/admin_ui.html#reported-metrics).
-// - Get subsequent recommended items when the user scrolls down (*infinite scroll*) or goes to the next page. See [Recommend Next Items](https://docs.recombee.com/api.html#recommend-next-items).
+// - Let Recombee know that this recommendation was successful (e.g., user clicked one of the recommended items). See [Reported metrics](https://docs.recombee.com/admin_ui#reported-metrics).
+// - Get subsequent recommended items when the user scrolls down (*infinite scroll*) or goes to the next page. See [Recommend Next Items](https://docs.recombee.com/api#recommend-next-items).
 // It is also possible to use POST HTTP method (for example in the case of a very long ReQL filter) - query parameters then become body parameters.
 func (c *RecombeeClient) NewRecommendItemsToUser(userId string, count int) *requests.RecommendItemsToUser {
 	return requests.NewRecommendItemsToUser(c, userId, count)
@@ -332,20 +334,34 @@ func (c *RecombeeClient) NewRecommendItemsToUser(userId string, count int) *requ
 // Recommends a set of items that are somehow related to one given item, *X*. A typical scenario is when the user *A* is viewing *X*. Then you may display items to the user that he might also be interested in. Recommend items to item request gives you Top-N such items, optionally taking the target user *A* into account.
 // The returned items are sorted by relevance (the first item being the most relevant).
 // Besides the recommended items, also a unique `recommId` is returned in the response. It can be used to:
-// - Let Recombee know that this recommendation was successful (e.g., user clicked one of the recommended items). See [Reported metrics](https://docs.recombee.com/admin_ui.html#reported-metrics).
-// - Get subsequent recommended items when the user scrolls down (*infinite scroll*) or goes to the next page. See [Recommend Next Items](https://docs.recombee.com/api.html#recommend-next-items).
+// - Let Recombee know that this recommendation was successful (e.g., user clicked one of the recommended items). See [Reported metrics](https://docs.recombee.com/admin_ui#reported-metrics).
+// - Get subsequent recommended items when the user scrolls down (*infinite scroll*) or goes to the next page. See [Recommend Next Items](https://docs.recombee.com/api#recommend-next-items).
 // It is also possible to use POST HTTP method (for example in the case of a very long ReQL filter) - query parameters then become body parameters.
 func (c *RecombeeClient) NewRecommendItemsToItem(itemId string, targetUserId string, count int) *requests.RecommendItemsToItem {
 	return requests.NewRecommendItemsToItem(c, itemId, targetUserId, count)
+}
+
+// NewRecommendItemsToItemSegment creates RecommendItemsToItemSegment request.
+// Recommends Items that are the most relevant to a particular Segment from a context [Segmentation](https://docs.recombee.com/segmentations).
+// Based on the used Segmentation, this endpoint can be used for example for:
+// - Recommending articles related to a particular topic
+// - Recommending songs belonging to a particular genre
+// - Recommending products produced by a particular brand
+// You need to set the used context Segmentation in the Admin UI in the [Scenario settings](https://docs.recombee.com/scenarios) prior to using this endpoint.
+// The returned items are sorted by relevance (the first item being the most relevant).
+// It is also possible to use the POST HTTP method (for example, in the case of a very long ReQL filter) — query parameters then become body parameters.
+func (c *RecombeeClient) NewRecommendItemsToItemSegment(contextSegmentId string, targetUserId string, count int) *requests.RecommendItemsToItemSegment {
+	return requests.NewRecommendItemsToItemSegment(c, contextSegmentId, targetUserId, count)
 }
 
 // NewRecommendNextItems creates RecommendNextItems request.
 // Returns items that shall be shown to a user as next recommendations when the user e.g. scrolls the page down (*infinite scroll*) or goes to the next page.
 // It accepts `recommId` of a base recommendation request (e.g., request from the first page) and the number of items that shall be returned (`count`).
 // The base request can be one of:
-//   - [Recommend items to item](https://docs.recombee.com/api.html#recommend-items-to-item)
-//   - [Recommend items to user](https://docs.recombee.com/api.html#recommend-items-to-user)
-//   - [Search items](https://docs.recombee.com/api.html#search-items)
+//   - [Recommend Items to Item](https://docs.recombee.com/api#recommend-items-to-item)
+//   - [Recommend Items to User](https://docs.recombee.com/api#recommend-items-to-user)
+//   - [Recommend Items to Item Segment](https://docs.recombee.com/api#recommend-items-to-item-segment)
+//   - [Search Items](https://docs.recombee.com/api#search-items)
 //
 // All the other parameters are inherited from the base request.
 // *Recommend next items* can be called many times for a single `recommId` and each call returns different (previously not recommended) items.
@@ -373,7 +389,7 @@ func (c *RecombeeClient) NewRecommendUsersToItem(itemId string, count int) *requ
 }
 
 // NewRecommendItemSegmentsToUser creates RecommendItemSegmentsToUser request.
-// Recommends the top Segments from a [Segmentation](https://docs.recombee.com/segmentations.html) for a particular user, based on the user's past interactions.
+// Recommends the top Segments from a [Segmentation](https://docs.recombee.com/segmentations) for a particular user, based on the user's past interactions.
 // Based on the used Segmentation, this endpoint can be used for example for:
 //   - Recommending the top categories for the user
 //   - Recommending the top genres for the user
@@ -388,7 +404,7 @@ func (c *RecombeeClient) NewRecommendItemSegmentsToUser(userId string, count int
 }
 
 // NewRecommendItemSegmentsToItem creates RecommendItemSegmentsToItem request.
-// Recommends Segments from a [Segmentation](https://docs.recombee.com/segmentations.html) that are the most relevant to a particular item.
+// Recommends Segments from a [Segmentation](https://docs.recombee.com/segmentations) that are the most relevant to a particular item.
 // Based on the used Segmentation, this endpoint can be used for example for:
 //   - Recommending the related categories
 //   - Recommending the related genres
@@ -403,7 +419,7 @@ func (c *RecombeeClient) NewRecommendItemSegmentsToItem(itemId string, targetUse
 }
 
 // NewRecommendItemSegmentsToItemSegment creates RecommendItemSegmentsToItemSegment request.
-// Recommends Segments from a result [Segmentation](https://docs.recombee.com/segmentations.html) that are the most relevant to a particular Segment from a context Segmentation.
+// Recommends Segments from a result [Segmentation](https://docs.recombee.com/segmentations) that are the most relevant to a particular Segment from a context Segmentation.
 // Based on the used Segmentations, this endpoint can be used for example for:
 //   - Recommending the related brands to particular brand
 //   - Recommending the related brands to particular category
@@ -416,27 +432,14 @@ func (c *RecombeeClient) NewRecommendItemSegmentsToItemSegment(contextSegmentId 
 	return requests.NewRecommendItemSegmentsToItemSegment(c, contextSegmentId, targetUserId, count)
 }
 
-// NewRecommendItemsToItemSegment creates RecommendItemsToItemSegment request.
-// Recommends Items that are the most relevant to a particular Segment from a context [Segmentation](https://docs.recombee.com/segmentations.html).
-// Based on the used Segmentation, this endpoint can be used for example for:
-// - Recommending articles related to a particular topic
-// - Recommending songs belonging to a particular genre
-// - Recommending products produced by a particular brand
-// You need to set the used context Segmentation in the Admin UI in the [Scenario settings](https://docs.recombee.com/scenarios) prior to using this endpoint.
-// The returned items are sorted by relevance (the first item being the most relevant).
-// It is also possible to use the POST HTTP method (for example, in the case of a very long ReQL filter) — query parameters then become body parameters.
-func (c *RecombeeClient) NewRecommendItemsToItemSegment(contextSegmentId string, targetUserId string, count int) *requests.RecommendItemsToItemSegment {
-	return requests.NewRecommendItemsToItemSegment(c, contextSegmentId, targetUserId, count)
-}
-
 // NewSearchItems creates SearchItems request.
 // Full-text personalized search. The results are based on the provided `searchQuery` and also on the user's past interactions (purchases, ratings, etc.) with the items (items more suitable for the user are preferred in the results).
 // All the string and set item properties are indexed by the search engine.
 // This endpoint should be used in a search box on your website/app. It can be called multiple times as the user is typing the query in order to get the most viable suggestions based on the current state of the query, or once after submitting the whole query.
 // The returned items are sorted by relevance (the first item being the most relevant).
 // Besides the recommended items, also a unique `recommId` is returned in the response. It can be used to:
-// - Let Recombee know that this search was successful (e.g., user clicked one of the recommended items). See [Reported metrics](https://docs.recombee.com/admin_ui.html#reported-metrics).
-// - Get subsequent search results when the user scrolls down or goes to the next page. See [Recommend Next Items](https://docs.recombee.com/api.html#recommend-next-items).
+// - Let Recombee know that this search was successful (e.g., user clicked one of the recommended items). See [Reported metrics](https://docs.recombee.com/admin_ui#reported-metrics).
+// - Get subsequent search results when the user scrolls down or goes to the next page. See [Recommend Next Items](https://docs.recombee.com/api#recommend-next-items).
 // It is also possible to use POST HTTP method (for example in the case of a very long ReQL filter) - query parameters then become body parameters.
 func (c *RecombeeClient) NewSearchItems(userId string, searchQuery string, count int) *requests.SearchItems {
 	return requests.NewSearchItems(c, userId, searchQuery, count)
@@ -457,7 +460,7 @@ func (c *RecombeeClient) NewSearchItemSegments(userId string, searchQuery string
 }
 
 // NewAddSearchSynonym creates AddSearchSynonym request.
-// Adds a new synonym for the [Search items](https://docs.recombee.com/api.html#search-items).
+// Adds a new synonym for the [Search items](https://docs.recombee.com/api#search-items).
 // When the `term` is used in the search query, the `synonym` is also used for the full-text search.
 // Unless `oneWay=true`, it works also in the opposite way (`synonym` -> `term`).
 // An example of a synonym can be `science fiction` for the term `sci-fi`.
@@ -478,7 +481,7 @@ func (c *RecombeeClient) NewDeleteAllSearchSynonyms() *requests.DeleteAllSearchS
 }
 
 // NewDeleteSearchSynonym creates DeleteSearchSynonym request.
-// Deletes synonym of the given `id`. This synonym is no longer taken into account in the [Search items](https://docs.recombee.com/api.html#search-items).
+// Deletes synonym of the given `id`. This synonym is no longer taken into account in the [Search items](https://docs.recombee.com/api#search-items).
 func (c *RecombeeClient) NewDeleteSearchSynonym(id string) *requests.DeleteSearchSynonym {
 	return requests.NewDeleteSearchSynonym(c, id)
 }
@@ -498,7 +501,7 @@ func (c *RecombeeClient) NewUpdatePropertyBasedSegmentation(segmentationId strin
 }
 
 // NewCreateAutoReqlSegmentation creates CreateAutoReqlSegmentation request.
-// Segment the items using a [ReQL](https://docs.recombee.com/reql.html) expression.
+// Segment the items using a [ReQL](https://docs.recombee.com/reql) expression.
 // For each item, the expression should return a set that contains IDs of segments to which the item belongs to.
 func (c *RecombeeClient) NewCreateAutoReqlSegmentation(segmentationId string, sourceType string, expression string) *requests.CreateAutoReqlSegmentation {
 	return requests.NewCreateAutoReqlSegmentation(c, segmentationId, sourceType, expression)
@@ -511,7 +514,7 @@ func (c *RecombeeClient) NewUpdateAutoReqlSegmentation(segmentationId string) *r
 }
 
 // NewCreateManualReqlSegmentation creates CreateManualReqlSegmentation request.
-// Segment the items using multiple [ReQL](https://docs.recombee.com/reql.html) filters.
+// Segment the items using multiple [ReQL](https://docs.recombee.com/reql) filters.
 // Use the Add Manual ReQL Items Segment endpoint to create the individual segments.
 func (c *RecombeeClient) NewCreateManualReqlSegmentation(segmentationId string, sourceType string) *requests.CreateManualReqlSegmentation {
 	return requests.NewCreateManualReqlSegmentation(c, segmentationId, sourceType)
@@ -525,7 +528,7 @@ func (c *RecombeeClient) NewUpdateManualReqlSegmentation(segmentationId string) 
 
 // NewAddManualReqlSegment creates AddManualReqlSegment request.
 // Adds a new Segment into a Manual ReQL Segmentation.
-// The new Segment is defined by a [ReQL](https://docs.recombee.com/reql.html) filter that returns `true` for an item in case that this item belongs to the segment.
+// The new Segment is defined by a [ReQL](https://docs.recombee.com/reql) filter that returns `true` for an item in case that this item belongs to the segment.
 func (c *RecombeeClient) NewAddManualReqlSegment(segmentationId string, segmentId string, filter string) *requests.AddManualReqlSegment {
 	return requests.NewAddManualReqlSegment(c, segmentationId, segmentId, filter)
 }
@@ -558,6 +561,12 @@ func (c *RecombeeClient) NewGetSegmentation(segmentationId string) *requests.Get
 // Delete existing Segmentation.
 func (c *RecombeeClient) NewDeleteSegmentation(segmentationId string) *requests.DeleteSegmentation {
 	return requests.NewDeleteSegmentation(c, segmentationId)
+}
+
+// NewListScenarios creates ListScenarios request.
+// Get all [Scenarios](https://docs.recombee.com/scenarios) of the given database.
+func (c *RecombeeClient) NewListScenarios() *requests.ListScenarios {
+	return requests.NewListScenarios(c)
 }
 
 // NewResetDatabase creates ResetDatabase request.

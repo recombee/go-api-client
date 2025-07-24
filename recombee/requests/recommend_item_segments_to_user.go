@@ -10,7 +10,7 @@ import (
 	timepkg "time" // avoid collision with param name
 )
 
-// RecommendItemSegmentsToUser Recommends the top Segments from a [Segmentation](https://docs.recombee.com/segmentations.html) for a particular user, based on the user's past interactions.
+// RecommendItemSegmentsToUser Recommends the top Segments from a [Segmentation](https://docs.recombee.com/segmentations) for a particular user, based on the user's past interactions.
 // Based on the used Segmentation, this endpoint can be used for example for:
 //   - Recommending the top categories for the user
 //   - Recommending the top genres for the user
@@ -26,7 +26,7 @@ type RecommendItemSegmentsToUser struct {
 }
 
 // NewRecommendItemSegmentsToUser creates RecommendItemSegmentsToUser request.
-// Recommends the top Segments from a [Segmentation](https://docs.recombee.com/segmentations.html) for a particular user, based on the user's past interactions.
+// Recommends the top Segments from a [Segmentation](https://docs.recombee.com/segmentations) for a particular user, based on the user's past interactions.
 // Based on the used Segmentation, this endpoint can be used for example for:
 //   - Recommending the top categories for the user
 //   - Recommending the top genres for the user
@@ -59,7 +59,7 @@ func NewRecommendItemSegmentsToUser(client ApiClient, userId string, count int) 
 
 // SetScenario sets the scenario parameter.
 // Scenario defines a particular application of recommendations. It can be, for example, "homepage", "cart", or "emailing".
-// You can set various settings to the [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com). You can also see the performance of each scenario in the Admin UI separately, so you can check how well each application performs.
+// You can set various settings to the [scenario](https://docs.recombee.com/scenarios) in the [Admin UI](https://admin.recombee.com). You can also see the performance of each scenario in the Admin UI separately, so you can check how well each application performs.
 // The AI that optimizes models to get the best results may optimize different scenarios separately or even use different models in each of the scenarios.
 func (r *RecommendItemSegmentsToUser) SetScenario(scenario string) *RecommendItemSegmentsToUser {
 	r.BodyParameters["scenario"] = scenario
@@ -74,14 +74,14 @@ func (r *RecommendItemSegmentsToUser) SetCascadeCreate(cascadeCreate bool) *Reco
 }
 
 // SetFilter sets the filter parameter.
-// Boolean-returning [ReQL](https://docs.recombee.com/reql.html) expression which allows you to filter recommended segments based on the `segmentationId`.
+// Boolean-returning [ReQL](https://docs.recombee.com/reql) expression which allows you to filter recommended segments based on the `segmentationId`.
 func (r *RecommendItemSegmentsToUser) SetFilter(filter string) *RecommendItemSegmentsToUser {
 	r.BodyParameters["filter"] = filter
 	return r
 }
 
 // SetBooster sets the booster parameter.
-// Number-returning [ReQL](https://docs.recombee.com/reql.html) expression which allows you to boost recommendation rate of some segments based on the `segmentationId`.
+// Number-returning [ReQL](https://docs.recombee.com/reql) expression which allows you to boost recommendation rate of some segments based on the `segmentationId`.
 func (r *RecommendItemSegmentsToUser) SetBooster(booster string) *RecommendItemSegmentsToUser {
 	r.BodyParameters["booster"] = booster
 	return r
@@ -89,9 +89,9 @@ func (r *RecommendItemSegmentsToUser) SetBooster(booster string) *RecommendItemS
 
 // SetLogic sets the logic parameter.
 // Logic specifies the particular behavior of the recommendation models. You can pick tailored logic for your domain and use case.
-// See [this section](https://docs.recombee.com/recommendation_logics.html) for a list of available logics and other details.
+// See [this section](https://docs.recombee.com/recommendation_logics) for a list of available logics and other details.
 // The difference between `logic` and `scenario` is that `logic` specifies mainly behavior, while `scenario` specifies the place where recommendations are shown to the users.
-// Logic can also be set to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
+// Logic can also be set to a [scenario](https://docs.recombee.com/scenarios) in the [Admin UI](https://admin.recombee.com).
 func (r *RecommendItemSegmentsToUser) SetLogic(logic bindings.Logic) *RecommendItemSegmentsToUser {
 	r.BodyParameters["logic"] = logic
 	return r

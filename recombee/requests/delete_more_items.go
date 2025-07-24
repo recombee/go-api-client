@@ -11,7 +11,7 @@ import (
 )
 
 // DeleteMoreItems Deletes all the items that pass the filter.
-// If an item becomes obsolete/no longer available, it is meaningful to **keep it in the catalog** (along with all the interaction data, which are very useful) and **only exclude the item from recommendations**. In such a case, use [ReQL filter](https://docs.recombee.com/reql.html) instead of deleting the item completely.
+// If an item becomes obsolete/no longer available, it is meaningful to **keep it in the catalog** (along with all the interaction data, which are very useful) and **only exclude the item from recommendations**. In such a case, use [ReQL filter](https://docs.recombee.com/reql) instead of deleting the item completely.
 type DeleteMoreItems struct {
 	ApiRequest
 	client ApiClient
@@ -19,7 +19,7 @@ type DeleteMoreItems struct {
 
 // NewDeleteMoreItems creates DeleteMoreItems request.
 // Deletes all the items that pass the filter.
-// If an item becomes obsolete/no longer available, it is meaningful to **keep it in the catalog** (along with all the interaction data, which are very useful) and **only exclude the item from recommendations**. In such a case, use [ReQL filter](https://docs.recombee.com/reql.html) instead of deleting the item completely.
+// If an item becomes obsolete/no longer available, it is meaningful to **keep it in the catalog** (along with all the interaction data, which are very useful) and **only exclude the item from recommendations**. In such a case, use [ReQL filter](https://docs.recombee.com/reql) instead of deleting the item completely.
 func NewDeleteMoreItems(client ApiClient, filter string) *DeleteMoreItems {
 
 	bodyParameters := map[string]interface{}{

@@ -7,14 +7,14 @@ import (
 	"time"
 )
 
-// SetUserValues Sets/updates (some) property values of the given user. The properties (columns) must be previously created by [Add user property](https://docs.recombee.com/api.html#add-user-property).
+// SetUserValues Sets/updates (some) property values of the given user. The properties (columns) must be previously created by [Add user property](https://docs.recombee.com/api#add-user-property).
 type SetUserValues struct {
 	ApiRequest
 	client ApiClient
 }
 
 // NewSetUserValues creates SetUserValues request.
-// Sets/updates (some) property values of the given user. The properties (columns) must be previously created by [Add user property](https://docs.recombee.com/api.html#add-user-property).
+// Sets/updates (some) property values of the given user. The properties (columns) must be previously created by [Add user property](https://docs.recombee.com/api#add-user-property).
 func NewSetUserValues(client ApiClient, userId string, values map[string]interface{}) *SetUserValues {
 
 	queryParams := map[string]interface{}{}

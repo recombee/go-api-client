@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-// SetItemValues Sets/updates (some) property values of the given item. The properties (columns) must be previously created by [Add item property](https://docs.recombee.com/api.html#add-item-property).
+// SetItemValues Sets/updates (some) property values of the given item. The properties (columns) must be previously created by [Add item property](https://docs.recombee.com/api#add-item-property).
 type SetItemValues struct {
 	ApiRequest
 	client ApiClient
@@ -15,7 +15,7 @@ type SetItemValues struct {
 
 // NewSetItemValues creates SetItemValues request.
 //
-// Sets/updates (some) property values of the given item. The properties (columns) must be previously created by [Add item property](https://docs.recombee.com/api.html#add-item-property).
+// Sets/updates (some) property values of the given item. The properties (columns) must be previously created by [Add item property](https://docs.recombee.com/api#add-item-property).
 func NewSetItemValues(client ApiClient, itemId string, values map[string]interface{}) *SetItemValues {
 
 	queryParams := map[string]interface{}{}

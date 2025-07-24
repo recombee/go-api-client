@@ -18,7 +18,7 @@ type ViewPortion struct {
 	Portion float64 `json:"portion,omitempty"`
 	// ID of the session in which the user viewed the item. Default is `null` (`None`, `nil`, `NULL` etc., depending on the language).
 	SessionId *string `json:"sessionId,omitempty"`
-	// UTC timestamp of the rating as ISO8601-1 pattern or UTC epoch time. The default value is the current time.
+	// UTC timestamp of the view portion as ISO8601-1 pattern or UTC epoch time. The default value is the current time.
 	Timestamp *time.Time `json:"timestamp,omitempty"`
 	// If this view portion is based on a recommendation request, `recommId` is the id of the clicked recommendation.
 	RecommId *string `json:"recommId,omitempty"`

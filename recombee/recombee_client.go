@@ -178,7 +178,7 @@ func (client *RecombeeClient) SendRequestWithContext(ctx context.Context, reques
 
 	// Set necessary headers
 	httpRequest.Header.Set("Content-Type", "application/json")
-	httpRequest.Header.Set("User-Agent", "recombee-go-api-client/5.0.0")
+	httpRequest.Header.Set("User-Agent", "recombee-go-api-client/5.1.0")
 
 	start := time.Now()
 	// Send the request
@@ -218,13 +218,13 @@ func (client *RecombeeClient) SendRequestWithContext(ctx context.Context, reques
 // Creating requests with custom constructors
 
 // NewSetItemValues creates SetItemValues request.
-// Sets/updates (some) property values of the given item. The properties (columns) must be previously created by [Add item property](https://docs.recombee.com/api.html#add-item-property).
+// Sets/updates (some) property values of the given item. The properties (columns) must be previously created by [Add item property](https://docs.recombee.com/api#add-item-property).
 func (c *RecombeeClient) NewSetItemValues(itemId string, values map[string]interface{}) *requestspkg.SetItemValues {
 	return requestspkg.NewSetItemValues(c, itemId, values)
 }
 
 // NewSetUserValues creates SetUserValues request.
-// Sets/updates (some) property values of the given user. The properties (columns) must be previously created by [Add user property](https://docs.recombee.com/api.html#add-user-property).
+// Sets/updates (some) property values of the given user. The properties (columns) must be previously created by [Add user property](https://docs.recombee.com/api#add-user-property).
 func (c *RecombeeClient) NewSetUserValues(userId string, values map[string]interface{}) *requestspkg.SetUserValues {
 	return requestspkg.NewSetUserValues(c, userId, values)
 }

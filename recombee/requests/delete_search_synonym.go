@@ -9,14 +9,14 @@ import (
 	timepkg "time" // avoid collision with param name
 )
 
-// DeleteSearchSynonym Deletes synonym of the given `id`. This synonym is no longer taken into account in the [Search items](https://docs.recombee.com/api.html#search-items).
+// DeleteSearchSynonym Deletes synonym of the given `id`. This synonym is no longer taken into account in the [Search items](https://docs.recombee.com/api#search-items).
 type DeleteSearchSynonym struct {
 	ApiRequest
 	client ApiClient
 }
 
 // NewDeleteSearchSynonym creates DeleteSearchSynonym request.
-// Deletes synonym of the given `id`. This synonym is no longer taken into account in the [Search items](https://docs.recombee.com/api.html#search-items).
+// Deletes synonym of the given `id`. This synonym is no longer taken into account in the [Search items](https://docs.recombee.com/api#search-items).
 func NewDeleteSearchSynonym(client ApiClient, id string) *DeleteSearchSynonym {
 
 	bodyParameters := map[string]interface{}{}

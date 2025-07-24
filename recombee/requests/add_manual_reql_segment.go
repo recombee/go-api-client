@@ -10,7 +10,7 @@ import (
 )
 
 // AddManualReqlSegment Adds a new Segment into a Manual ReQL Segmentation.
-// The new Segment is defined by a [ReQL](https://docs.recombee.com/reql.html) filter that returns `true` for an item in case that this item belongs to the segment.
+// The new Segment is defined by a [ReQL](https://docs.recombee.com/reql) filter that returns `true` for an item in case that this item belongs to the segment.
 type AddManualReqlSegment struct {
 	ApiRequest
 	client ApiClient
@@ -18,7 +18,7 @@ type AddManualReqlSegment struct {
 
 // NewAddManualReqlSegment creates AddManualReqlSegment request.
 // Adds a new Segment into a Manual ReQL Segmentation.
-// The new Segment is defined by a [ReQL](https://docs.recombee.com/reql.html) filter that returns `true` for an item in case that this item belongs to the segment.
+// The new Segment is defined by a [ReQL](https://docs.recombee.com/reql) filter that returns `true` for an item in case that this item belongs to the segment.
 func NewAddManualReqlSegment(client ApiClient, segmentationId string, segmentId string, filter string) *AddManualReqlSegment {
 
 	bodyParameters := map[string]interface{}{
