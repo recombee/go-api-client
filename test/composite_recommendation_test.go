@@ -7,8 +7,8 @@ import (
 	"testing"
 )
 
-func TestRecommendItemsToItemSegment(t *testing.T) {
-	var resp bindings.RecommendationResponse
+func TestCompositeRecommendation(t *testing.T) {
+	var resp bindings.CompositeRecommendationResponse
 	var resp2 interface{}
 	var err error
 	useVars(resp, resp2, err)
@@ -17,6 +17,6 @@ func TestRecommendItemsToItemSegment(t *testing.T) {
 	client := createClient(t)
 
 	// it 'rejects request to scenario which is not set up'
-	resp, err = client.NewRecommendItemsToItemSegment("segment_id", "entity_id", 5).SetScenario("scenario1").SetCascadeCreate(true).Send()
+	resp, err = client.NewCompositeRecommendation("scenario_id", 5).SetCascadeCreate(true).Send()
 	checkErrorResponse(t, err, 400)
 }

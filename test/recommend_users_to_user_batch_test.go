@@ -4,7 +4,7 @@ package test
 
 import (
 	"context"
-	"github.com/recombee/go-api-client/v5/recombee/requests"
+	"github.com/recombee/go-api-client/v6/recombee/requests"
 	"testing"
 )
 
@@ -14,6 +14,7 @@ func TestRecommendUsersToUserInBatch(t *testing.T) {
 	// it 'recommends'
 	// it 'recommends to previously nonexisting entity with cascadeCreate'
 	// it 'recommends with expert settings'
+	// it 'recommends with reql expressions'
 	client := createClient(t)
 	var resp2 interface{}
 	var err error
@@ -23,6 +24,7 @@ func TestRecommendUsersToUserInBatch(t *testing.T) {
 		client.NewRecommendUsersToUser("entity_id", 9),
 		client.NewRecommendUsersToUser("nonexisting", 9).SetCascadeCreate(true),
 		client.NewRecommendUsersToUser("nonexisting2", 9).SetCascadeCreate(true).SetExpertSettings(map[string]interface{}{}),
+		client.NewRecommendUsersToUser("nonexisting2", 9).SetCascadeCreate(true).SetReqlExpressions(map[string]string{"boolean": "true", "number": "if ('answer' > 0) then 1 else 2", "string": "\"test\""}),
 	}
 
 	batchResponse, err := client.NewBatch(reqs).SendWithContext(context.Background())
@@ -33,4 +35,5 @@ func TestRecommendUsersToUserInBatch(t *testing.T) {
 	assertEqual(t, 200, batchResponse[0].StatusCode)
 	assertEqual(t, 200, batchResponse[1].StatusCode)
 	assertEqual(t, 200, batchResponse[2].StatusCode)
+	assertEqual(t, 200, batchResponse[3].StatusCode)
 }

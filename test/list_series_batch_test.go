@@ -2,8 +2,8 @@ package test
 
 import (
 	"context"
-	"github.com/recombee/go-api-client/v5/recombee/bindings"
-	"github.com/recombee/go-api-client/v5/recombee/requests"
+	"github.com/recombee/go-api-client/v6/recombee/bindings"
+	"github.com/recombee/go-api-client/v6/recombee/requests"
 	"testing"
 	"time"
 )

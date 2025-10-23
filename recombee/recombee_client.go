@@ -9,8 +9,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	errorspkg "github.com/recombee/go-api-client/v5/recombee/errors"
-	requestspkg "github.com/recombee/go-api-client/v5/recombee/requests"
+	errorspkg "github.com/recombee/go-api-client/v6/recombee/errors"
+	requestspkg "github.com/recombee/go-api-client/v6/recombee/requests"
 	"io"
 	"net"
 	"net/http"
@@ -178,7 +178,7 @@ func (client *RecombeeClient) SendRequestWithContext(ctx context.Context, reques
 
 	// Set necessary headers
 	httpRequest.Header.Set("Content-Type", "application/json")
-	httpRequest.Header.Set("User-Agent", "recombee-go-api-client/5.1.0")
+	httpRequest.Header.Set("User-Agent", "recombee-go-api-client/6.0.0")
 
 	start := time.Now()
 	// Send the request

@@ -22,6 +22,8 @@ type DetailView struct {
 	RecommId *string `json:"recommId,omitempty"`
 	// A dictionary of additional data for the interaction.
 	AdditionalData *map[string]interface{} `json:"additionalData,omitempty"`
+	// Indicates whether the item was automatically presented to the user (e.g., in a swiping feed) or explicitly requested by the user (e.g., by clicking on a link). Defaults to `false`.
+	AutoPresented *bool `json:"autoPresented,omitempty"`
 }
 
 // Support both ISO 8601 and epoch time

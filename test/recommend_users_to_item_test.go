@@ -3,7 +3,7 @@
 package test
 
 import (
-	"github.com/recombee/go-api-client/v5/recombee/bindings"
+	"github.com/recombee/go-api-client/v6/recombee/bindings"
 	"testing"
 )
 
@@ -31,6 +31,12 @@ func TestRecommendUsersToItem(t *testing.T) {
 
 	// it 'recommends with expert settings'
 	resp, err = client.NewRecommendUsersToItem("nonexisting2", 9).SetCascadeCreate(true).SetExpertSettings(map[string]interface{}{}).Send()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// it 'recommends with reql expressions'
+	resp, err = client.NewRecommendUsersToItem("nonexisting2", 9).SetCascadeCreate(true).SetReqlExpressions(map[string]string{"boolean": "true", "number": "if ('answer' > 0) then 1 else 2", "string": "\"test\""}).Send()
 	if err != nil {
 		t.Fatal(err)
 	}

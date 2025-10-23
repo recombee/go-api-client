@@ -8,16 +8,16 @@ import (
 	"testing"
 )
 
-func TestGetUserValuesInBatch(t *testing.T) {
+func TestCompositeRecommendationInBatch(t *testing.T) {
 	defaultTestSetUp(t)
-	// it 'gets values'
+	// it 'rejects request to scenario which is not set up'
 	client := createClient(t)
 	var resp2 interface{}
 	var err error
 	useVars(resp2, err)
 
 	var reqs = []requests.Request{
-		client.NewGetUserValues("entity_id"),
+		client.NewCompositeRecommendation("scenario_id", 5).SetCascadeCreate(true),
 	}
 
 	batchResponse, err := client.NewBatch(reqs).SendWithContext(context.Background())
@@ -25,7 +25,5 @@ func TestGetUserValuesInBatch(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	assertEqual(t, 200, batchResponse[0].StatusCode)
-	assertEqual(t, 42, (*(batchResponse[0].Result.(*map[string]interface{})))["int_property"])
-	assertEqual(t, "hello", (*(batchResponse[0].Result.(*map[string]interface{})))["str_property"])
+	assertEqual(t, 400, batchResponse[0].StatusCode)
 }

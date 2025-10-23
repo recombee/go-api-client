@@ -4,6 +4,6 @@ package bindings
 
 // ListSearchSynonymsResponse Binding
 type ListSearchSynonymsResponse struct {
-	// Defined search synonyms.
+	// List of synonyms
 	Synonyms []SearchSynonym `json:"synonyms,omitempty"`
 }

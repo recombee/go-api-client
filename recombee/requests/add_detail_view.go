@@ -74,6 +74,13 @@ func (r *AddDetailView) SetAdditionalData(additionalData map[string]interface{})
 	return r
 }
 
+// SetAutoPresented sets the autoPresented parameter.
+// Indicates whether the item was automatically presented to the user (e.g., in a swiping feed) or explicitly requested by the user (e.g., by clicking on a link). Defaults to `false`.
+func (r *AddDetailView) SetAutoPresented(autoPresented bool) *AddDetailView {
+	r.BodyParameters["autoPresented"] = autoPresented
+	return r
+}
+
 // Sends the request to the Recombee API using the specified Context
 func (r *AddDetailView) SendWithContext(ctx context.Context) (string, error) {
 	err := r.client.SendRequestWithContext(ctx, &r.ApiRequest)

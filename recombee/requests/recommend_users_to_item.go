@@ -5,7 +5,7 @@ package requests
 import (
 	"context"
 	"fmt"
-	"github.com/recombee/go-api-client/v5/recombee/bindings"
+	"github.com/recombee/go-api-client/v6/recombee/bindings"
 	"net/http"
 	timepkg "time" // avoid collision with param name
 )
@@ -124,7 +124,7 @@ func (r *RecommendUsersToItem) SetIncludedProperties(includedProperties []string
 }
 
 // SetFilter sets the filter parameter.
-// Boolean-returning [ReQL](https://docs.recombee.com/reql) expression, which allows you to filter recommended items based on the values of their attributes.
+// Boolean-returning [ReQL](https://docs.recombee.com/reql) expression, which allows you to filter recommended users based on the values of their attributes.
 // Filters can also be assigned to a [scenario](https://docs.recombee.com/scenarios) in the [Admin UI](https://admin.recombee.com).
 func (r *RecommendUsersToItem) SetFilter(filter string) *RecommendUsersToItem {
 	r.BodyParameters["filter"] = filter
@@ -132,7 +132,7 @@ func (r *RecommendUsersToItem) SetFilter(filter string) *RecommendUsersToItem {
 }
 
 // SetBooster sets the booster parameter.
-// Number-returning [ReQL](https://docs.recombee.com/reql) expression, which allows you to boost the recommendation rate of some items based on the values of their attributes.
+// Number-returning [ReQL](https://docs.recombee.com/reql) expression, which allows you to boost the recommendation rate of some users based on the values of their attributes.
 // Boosters can also be assigned to a [scenario](https://docs.recombee.com/scenarios) in the [Admin UI](https://admin.recombee.com).
 func (r *RecommendUsersToItem) SetBooster(booster string) *RecommendUsersToItem {
 	r.BodyParameters["booster"] = booster
@@ -149,8 +149,57 @@ func (r *RecommendUsersToItem) SetLogic(logic bindings.Logic) *RecommendUsersToI
 	return r
 }
 
+// SetReqlExpressions sets the reqlExpressions parameter.
+// A dictionary of [ReQL](https://docs.recombee.com/reql) expressions that will be executed for each recommended user.
+// This can be used to compute additional properties of the recommended users that are not stored in the database.
+// The keys are the names of the expressions, and the values are the actual ReQL expressions.
+// Example request:
+// ```json
+//
+//	{
+//	  "reqlExpressions": {
+//	    "isInUsersCity": "context_user[\"city\"] in 'cities'",
+//	    "distanceToUser": "earth_distance('location', context_user[\"location\"])",
+//	    "isFromSameCompany": "'company' == context_item[\"company\"]"
+//	  }
+//	}
+//
+// ```
+// Example response:
+// ```json
+//
+//	{
+//	  "recommId": "ce52ada4-e4d9-4885-943c-407db2dee837",
+//	  "recomms":
+//	    [
+//	      {
+//	        "id": "restaurant-178",
+//	        "reqlEvaluations": {
+//	          "isInUsersCity": true,
+//	          "distanceToUser": 5200.2,
+//	          "isFromSameCompany": false
+//	        }
+//	      },
+//	      {
+//	        "id": "bar-42",
+//	        "reqlEvaluations": {
+//	          "isInUsersCity": false,
+//	          "distanceToUser": 2516.0,
+//	          "isFromSameCompany": true
+//	        }
+//	      }
+//	    ],
+//	   "numberNextRecommsCalls": 0
+//	}
+//
+// ```
+func (r *RecommendUsersToItem) SetReqlExpressions(reqlExpressions map[string]string) *RecommendUsersToItem {
+	r.BodyParameters["reqlExpressions"] = reqlExpressions
+	return r
+}
+
 // SetDiversity sets the diversity parameter.
-// **Expert option:** Real number from [0.0, 1.0], which determines how mutually dissimilar the recommended items should be. The default value is 0.0, i.e., no diversification. Value 1.0 means maximal diversification.
+// **Expert option:** Real number from [0.0, 1.0], which determines how mutually dissimilar the recommended users should be. The default value is 0.0, i.e., no diversification. Value 1.0 means maximal diversification.
 func (r *RecommendUsersToItem) SetDiversity(diversity float64) *RecommendUsersToItem {
 	r.BodyParameters["diversity"] = diversity
 	return r

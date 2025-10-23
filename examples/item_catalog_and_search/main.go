@@ -3,8 +3,8 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/recombee/go-api-client/v5/recombee"
-	"github.com/recombee/go-api-client/v5/recombee/requests"
+	"github.com/recombee/go-api-client/v6/recombee"
+	"github.com/recombee/go-api-client/v6/recombee/requests"
 	"math/rand"
 	"os"
 	"time"

@@ -5,7 +5,7 @@ package requests
 import (
 	"context"
 	"fmt"
-	"github.com/recombee/go-api-client/v5/recombee/bindings"
+	"github.com/recombee/go-api-client/v6/recombee/bindings"
 	"net/http"
 	timepkg "time" // avoid collision with param name
 )
@@ -163,6 +163,52 @@ func (r *SearchItems) SetBooster(booster string) *SearchItems {
 // Logic can also be set to a [scenario](https://docs.recombee.com/scenarios) in the [Admin UI](https://admin.recombee.com).
 func (r *SearchItems) SetLogic(logic bindings.Logic) *SearchItems {
 	r.BodyParameters["logic"] = logic
+	return r
+}
+
+// SetReqlExpressions sets the reqlExpressions parameter.
+// A dictionary of [ReQL](https://docs.recombee.com/reql) expressions that will be executed for each recommended item.
+// This can be used to compute additional properties of the recommended items that are not stored in the database.
+// The keys are the names of the expressions, and the values are the actual ReQL expressions.
+// Example request:
+// ```json
+//
+//	{
+//	  "reqlExpressions": {
+//	    "isInUsersCity": "context_user[\"city\"] in 'cities'",
+//	    "distanceToUser": "earth_distance('location', context_user[\"location\"])"
+//	  }
+//	}
+//
+// ```
+// Example response:
+// ```json
+//
+//	{
+//	  "recommId": "ce52ada4-e4d9-4885-943c-407db2dee837",
+//	  "recomms":
+//	    [
+//	      {
+//	        "id": "restaurant-178",
+//	        "reqlEvaluations": {
+//	          "isInUsersCity": true,
+//	          "distanceToUser": 5200.2
+//	        }
+//	      },
+//	      {
+//	        "id": "bar-42",
+//	        "reqlEvaluations": {
+//	          "isInUsersCity": false,
+//	          "distanceToUser": 2516.0
+//	        }
+//	      }
+//	    ],
+//	   "numberNextRecommsCalls": 0
+//	}
+//
+// ```
+func (r *SearchItems) SetReqlExpressions(reqlExpressions map[string]string) *SearchItems {
+	r.BodyParameters["reqlExpressions"] = reqlExpressions
 	return r
 }
 

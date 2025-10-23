@@ -77,6 +77,20 @@ func (r *SetViewPortion) SetAdditionalData(additionalData map[string]interface{}
 	return r
 }
 
+// SetAutoPresented sets the autoPresented parameter.
+// Indicates whether the item was automatically presented to the user (e.g., in a swiping feed) or explicitly requested by the user (e.g., by clicking on a link). Defaults to `false`.
+func (r *SetViewPortion) SetAutoPresented(autoPresented bool) *SetViewPortion {
+	r.BodyParameters["autoPresented"] = autoPresented
+	return r
+}
+
+// SetTimeSpent sets the timeSpent parameter.
+// The duration (in seconds) that the user viewed the item. In update requests, this value may only increase and is required only if it has changed.
+func (r *SetViewPortion) SetTimeSpent(timeSpent float64) *SetViewPortion {
+	r.BodyParameters["timeSpent"] = timeSpent
+	return r
+}
+
 // Sends the request to the Recombee API using the specified Context
 func (r *SetViewPortion) SendWithContext(ctx context.Context) (string, error) {
 	err := r.client.SendRequestWithContext(ctx, &r.ApiRequest)

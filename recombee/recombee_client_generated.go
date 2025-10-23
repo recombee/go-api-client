@@ -3,7 +3,7 @@
 package recombee
 
 import (
-	"github.com/recombee/go-api-client/v5/recombee/requests"
+	"github.com/recombee/go-api-client/v6/recombee/requests"
 )
 
 // NewAddItem creates AddItem request.
@@ -430,6 +430,31 @@ func (c *RecombeeClient) NewRecommendItemSegmentsToItem(itemId string, targetUse
 // It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
 func (c *RecombeeClient) NewRecommendItemSegmentsToItemSegment(contextSegmentId string, targetUserId string, count int) *requests.RecommendItemSegmentsToItemSegment {
 	return requests.NewRecommendItemSegmentsToItemSegment(c, contextSegmentId, targetUserId, count)
+}
+
+// NewCompositeRecommendation creates CompositeRecommendation request.
+// Composite Recommendation returns both a *source entity* (e.g., an Item or [Item Segment](https://docs.recombee.com/segmentations.html)) and a list of related recommendations in a single response.
+// It is ideal for use cases such as personalized homepage sections (*Articles from <category>*), *Because You Watched <movie>*, or *Artists Related to Your Favorite Artist <artist>*.
+// See detailed **examples and configuration guidance** in the [Composite Scenarios documentation](https://docs.recombee.com/scenarios#composite-recommendations).
+// **Structure**
+// The endpoint operates in two stages:
+// 1. Recommends the *source* (e.g., an Item Segment or item) to the user.
+// 2. Recommends *results* (items or Item Segments) related to that *source*.
+// For example, *Articles from <category>* can be decomposed into:
+//   - [Recommend Item Segments To User](https://docs.recombee.com/api#recommend-item-segments-to-user) to find the category.
+//   - [Recommend Items To Item Segment](https://docs.recombee.com/api#recommend-items-to-item-segment) to recommend articles from that category.
+//
+// Since the first step uses [Recommend Item Segments To User](https://docs.recombee.com/api#recommend-items-to-user), you must include the `userId` parameter in the *Composite Recommendation* request.
+// Each *Composite Recommendation* counts as a single recommendation API request for billing.
+// **Stage-specific Parameters**
+// Additional parameters can be supplied via [sourceSettings](https://docs.recombee.com/api#composite-recommendation-param-sourceSettings) and [resultSettings](https://docs.recombee.com/api#composite-recommendation-param-resultSettings).
+// In the example above:
+//   - `sourceSettings` may include any parameter valid for [Recommend Item Segments To User](https://docs.recombee.com/api#recommend-items-to-user) (e.g., `filter`, `booster`).
+//   - `resultSettings` may include any parameter valid for [Recommend Items To Item Segment](https://docs.recombee.com/api#recommend-items-to-item-segment).
+//
+// See [this example](https://docs.recombee.com/api#composite-recommendation-example-setting-parameters-for-individual-stages) for more details.
+func (c *RecombeeClient) NewCompositeRecommendation(scenario string, count int) *requests.CompositeRecommendation {
+	return requests.NewCompositeRecommendation(c, scenario, count)
 }
 
 // NewSearchItems creates SearchItems request.

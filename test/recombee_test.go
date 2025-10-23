@@ -2,9 +2,9 @@ package test
 
 import (
 	"fmt"
-	"github.com/recombee/go-api-client/v5/recombee"
-	"github.com/recombee/go-api-client/v5/recombee/errors"
-	"github.com/recombee/go-api-client/v5/recombee/requests"
+	"github.com/recombee/go-api-client/v6/recombee"
+	"github.com/recombee/go-api-client/v6/recombee/errors"
+	"github.com/recombee/go-api-client/v6/recombee/requests"
 	"math/rand"
 	"net/http"
 	"os"
@@ -130,7 +130,7 @@ func interactionsTestSetUp(t *testing.T) {
 	batchReq := client.NewBatch([]requests.Request{
 		client.NewAddUser("user"),
 		client.NewAddItem("item"),
-		client.NewAddDetailView("user", "item"),
+		client.NewAddDetailView("user", "item").SetTimestamp(time.Unix(0, 0)),
 		client.NewAddPurchase("user", "item").SetTimestamp(time.Unix(0, 0)),
 		client.NewAddRating("user", "item", 1).SetTimestamp(time.Unix(0, 0)),
 		client.NewAddCartAddition("user", "item").SetTimestamp(time.Unix(0, 0)),
