@@ -2,15 +2,16 @@ package test
 
 import (
 	"fmt"
-	"github.com/recombee/go-api-client/v6/recombee"
-	"github.com/recombee/go-api-client/v6/recombee/errors"
-	"github.com/recombee/go-api-client/v6/recombee/requests"
 	"math/rand"
 	"net/http"
 	"os"
 	"reflect"
 	"testing"
 	"time"
+
+	"github.com/recombee/go-api-client/v6/recombee"
+	"github.com/recombee/go-api-client/v6/recombee/errors"
+	"github.com/recombee/go-api-client/v6/recombee/requests"
 )
 
 func createClient(t *testing.T) *recombee.RecombeeClient {
@@ -93,6 +94,10 @@ func numbersAreEqual(a, b reflect.Value) bool {
 func useVars(vars ...interface{}) {}
 
 func defaultTestSetUp(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping integration test in short mode")
+	}
+
 	client := createClient(t)
 
 	client.NewResetDatabase().Send()
