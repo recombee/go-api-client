@@ -5,9 +5,10 @@ package requests
 import (
 	"context"
 	"fmt"
-	"github.com/recombee/go-api-client/v6/recombee/bindings"
 	"net/http"
 	timepkg "time" // avoid collision with param name
+
+	"github.com/recombee/go-api-client/v6/recombee/bindings"
 )
 
 // GetItemPropertyInfo Gets information about specified item property.
@@ -43,12 +44,12 @@ func (r *GetItemPropertyInfo) SendWithContext(ctx context.Context) (bindings.Pro
 	if err != nil {
 		return bindings.PropertyInfo{}, err
 	}
-	return *(r.ApiRequest.Target.(*bindings.PropertyInfo)), err
+	return *(r.Target.(*bindings.PropertyInfo)), err
 }
 
 // Sends the request to the Recombee API
 func (r *GetItemPropertyInfo) Send() (bindings.PropertyInfo, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), r.ApiRequest.DefaultTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), r.DefaultTimeout)
 	defer cancel()
 	return r.SendWithContext(ctx)
 }

@@ -5,9 +5,10 @@ package requests
 import (
 	"context"
 	"fmt"
-	"github.com/recombee/go-api-client/v6/recombee/bindings"
 	"net/http"
 	timepkg "time" // avoid collision with param name
+
+	"github.com/recombee/go-api-client/v6/recombee/bindings"
 )
 
 // ListUserDetailViews Lists all the detail views of different items ever made by the given user.
@@ -43,12 +44,12 @@ func (r *ListUserDetailViews) SendWithContext(ctx context.Context) ([]bindings.D
 	if err != nil {
 		return nil, err
 	}
-	return *(r.ApiRequest.Target.(*[]bindings.DetailView)), err
+	return *(r.Target.(*[]bindings.DetailView)), err
 }
 
 // Sends the request to the Recombee API
 func (r *ListUserDetailViews) Send() ([]bindings.DetailView, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), r.ApiRequest.DefaultTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), r.DefaultTimeout)
 	defer cancel()
 	return r.SendWithContext(ctx)
 }

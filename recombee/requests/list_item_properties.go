@@ -4,10 +4,10 @@ package requests
 
 import (
 	"context"
-	"fmt"
-	"github.com/recombee/go-api-client/v6/recombee/bindings"
 	"net/http"
 	timepkg "time" // avoid collision with param name
+
+	"github.com/recombee/go-api-client/v6/recombee/bindings"
 )
 
 // ListItemProperties Gets the list of all the item properties in your database.
@@ -27,7 +27,7 @@ func NewListItemProperties(client ApiClient) *ListItemProperties {
 	return &ListItemProperties{
 		ApiRequest{
 			HttpMethod:      http.MethodGet,
-			Path:            fmt.Sprintf("/items/properties/list/"),
+			Path:            "/items/properties/list/",
 			BodyParameters:  bodyParameters,
 			QueryParameters: queryParams,
 			DefaultTimeout:  100000 * timepkg.Millisecond,
@@ -43,12 +43,12 @@ func (r *ListItemProperties) SendWithContext(ctx context.Context) ([]bindings.Pr
 	if err != nil {
 		return nil, err
 	}
-	return *(r.ApiRequest.Target.(*[]bindings.PropertyInfo)), err
+	return *(r.Target.(*[]bindings.PropertyInfo)), err
 }
 
 // Sends the request to the Recombee API
 func (r *ListItemProperties) Send() ([]bindings.PropertyInfo, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), r.ApiRequest.DefaultTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), r.DefaultTimeout)
 	defer cancel()
 	return r.SendWithContext(ctx)
 }

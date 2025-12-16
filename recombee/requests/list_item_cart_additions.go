@@ -5,9 +5,10 @@ package requests
 import (
 	"context"
 	"fmt"
-	"github.com/recombee/go-api-client/v6/recombee/bindings"
 	"net/http"
 	timepkg "time" // avoid collision with param name
+
+	"github.com/recombee/go-api-client/v6/recombee/bindings"
 )
 
 // ListItemCartAdditions Lists all the ever-made cart additions of the given item.
@@ -43,12 +44,12 @@ func (r *ListItemCartAdditions) SendWithContext(ctx context.Context) ([]bindings
 	if err != nil {
 		return nil, err
 	}
-	return *(r.ApiRequest.Target.(*[]bindings.CartAddition)), err
+	return *(r.Target.(*[]bindings.CartAddition)), err
 }
 
 // Sends the request to the Recombee API
 func (r *ListItemCartAdditions) Send() ([]bindings.CartAddition, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), r.ApiRequest.DefaultTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), r.DefaultTimeout)
 	defer cancel()
 	return r.SendWithContext(ctx)
 }

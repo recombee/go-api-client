@@ -5,9 +5,10 @@ package requests
 import (
 	"context"
 	"fmt"
-	"github.com/recombee/go-api-client/v6/recombee/bindings"
 	"net/http"
 	timepkg "time" // avoid collision with param name
+
+	"github.com/recombee/go-api-client/v6/recombee/bindings"
 )
 
 // RecommendItemSegmentsToItem Recommends Segments from a [Segmentation](https://docs.recombee.com/segmentations) that are the most relevant to a particular item.
@@ -118,12 +119,12 @@ func (r *RecommendItemSegmentsToItem) SendWithContext(ctx context.Context) (bind
 	if err != nil {
 		return bindings.RecommendationResponse{}, err
 	}
-	return *(r.ApiRequest.Target.(*bindings.RecommendationResponse)), err
+	return *(r.Target.(*bindings.RecommendationResponse)), err
 }
 
 // Sends the request to the Recombee API
 func (r *RecommendItemSegmentsToItem) Send() (bindings.RecommendationResponse, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), r.ApiRequest.DefaultTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), r.DefaultTimeout)
 	defer cancel()
 	return r.SendWithContext(ctx)
 }

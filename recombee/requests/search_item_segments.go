@@ -5,9 +5,10 @@ package requests
 import (
 	"context"
 	"fmt"
-	"github.com/recombee/go-api-client/v6/recombee/bindings"
 	"net/http"
 	timepkg "time" // avoid collision with param name
+
+	"github.com/recombee/go-api-client/v6/recombee/bindings"
 )
 
 // SearchItemSegments Full-text personalized search that returns Segments from a Segmentation. The results are based on the provided `searchQuery` and also on the user's past interactions (purchases, ratings, etc.).
@@ -116,12 +117,12 @@ func (r *SearchItemSegments) SendWithContext(ctx context.Context) (bindings.Sear
 	if err != nil {
 		return bindings.SearchResponse{}, err
 	}
-	return *(r.ApiRequest.Target.(*bindings.SearchResponse)), err
+	return *(r.Target.(*bindings.SearchResponse)), err
 }
 
 // Sends the request to the Recombee API
 func (r *SearchItemSegments) Send() (bindings.SearchResponse, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), r.ApiRequest.DefaultTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), r.DefaultTimeout)
 	defer cancel()
 	return r.SendWithContext(ctx)
 }

@@ -4,7 +4,6 @@ package requests
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	timepkg "time" // avoid collision with param name
 )
@@ -26,7 +25,7 @@ func NewDeleteAllSearchSynonyms(client ApiClient) *DeleteAllSearchSynonyms {
 	return &DeleteAllSearchSynonyms{
 		ApiRequest{
 			HttpMethod:      http.MethodDelete,
-			Path:            fmt.Sprintf("/synonyms/items/"),
+			Path:            "/synonyms/items/",
 			BodyParameters:  bodyParameters,
 			QueryParameters: queryParams,
 			DefaultTimeout:  10000 * timepkg.Millisecond,
@@ -42,12 +41,12 @@ func (r *DeleteAllSearchSynonyms) SendWithContext(ctx context.Context) (string, 
 	if err != nil {
 		return "", err
 	}
-	return *(r.ApiRequest.Target.(*string)), err
+	return *(r.Target.(*string)), err
 }
 
 // Sends the request to the Recombee API
 func (r *DeleteAllSearchSynonyms) Send() (string, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), r.ApiRequest.DefaultTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), r.DefaultTimeout)
 	defer cancel()
 	return r.SendWithContext(ctx)
 }
