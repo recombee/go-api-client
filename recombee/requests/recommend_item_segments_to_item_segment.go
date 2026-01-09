@@ -111,6 +111,49 @@ func (r *RecommendItemSegmentsToItemSegment) SetReturnAbGroup(returnAbGroup bool
 	return r
 }
 
+// SetReqlExpressions sets the reqlExpressions parameter.
+// A dictionary of [ReQL](https://docs.recombee.com/reql) expressions that will be executed for each recommended Item Segment.
+// This can be used to compute additional properties of the recommended Item Segments.
+// The keys are the names of the expressions, and the values are the actual ReQL expressions.
+// Example request:
+// ```json
+//
+//	{
+//	  "reqlExpressions": {
+//	    "countItems": "size(segment_items(\"categories\", 'segmentId'))"
+//	  }
+//	}
+//
+// ```
+// Example response:
+// ```json
+//
+//	{
+//	  "recommId": "a7ac55a4-8d6e-4f19-addc-abac4164d8a8",
+//	  "recomms":
+//	    [
+//	      {
+//	        "id": "category-fantasy-books",
+//	        "reqlEvaluations": {
+//	          "countItems": 486
+//	        }
+//	      },
+//	      {
+//	        "id": "category-sci-fi-costumes",
+//	        "reqlEvaluations": {
+//	          "countItems": 19
+//	        }
+//	      }
+//	    ],
+//	   "numberNextRecommsCalls": 0
+//	}
+//
+// ```
+func (r *RecommendItemSegmentsToItemSegment) SetReqlExpressions(reqlExpressions map[string]string) *RecommendItemSegmentsToItemSegment {
+	r.BodyParameters["reqlExpressions"] = reqlExpressions
+	return r
+}
+
 // Sends the request to the Recombee API using the specified Context
 func (r *RecommendItemSegmentsToItemSegment) SendWithContext(ctx context.Context) (bindings.RecommendationResponse, error) {
 	err := r.client.SendRequestWithContext(ctx, &r.ApiRequest)

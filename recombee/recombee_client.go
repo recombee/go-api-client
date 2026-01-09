@@ -178,7 +178,7 @@ func (client *RecombeeClient) SendRequestWithContext(ctx context.Context, reques
 
 	// Set necessary headers
 	httpRequest.Header.Set("Content-Type", "application/json")
-	httpRequest.Header.Set("User-Agent", "recombee-go-api-client/6.0.0")
+	httpRequest.Header.Set("User-Agent", "recombee-go-api-client/6.1.0")
 
 	start := time.Now()
 	// Send the request
