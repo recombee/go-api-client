@@ -4,10 +4,10 @@ package requests
 
 import (
 	"context"
-	"fmt"
-	"github.com/recombee/go-api-client/v6/recombee/bindings"
 	"net/http"
 	timepkg "time" // avoid collision with param name
+
+	"github.com/recombee/go-api-client/v6/recombee/bindings"
 )
 
 // CompositeRecommendation Composite Recommendation returns both a *source entity* (e.g., an Item or [Item Segment](https://docs.recombee.com/segmentations.html)) and a list of related recommendations in a single response.
@@ -68,7 +68,7 @@ func NewCompositeRecommendation(client ApiClient, scenario string, count int) *C
 	return &CompositeRecommendation{
 		ApiRequest{
 			HttpMethod:      http.MethodPost,
-			Path:            fmt.Sprintf("/recomms/composite/"),
+			Path:            "/recomms/composite/",
 			BodyParameters:  bodyParameters,
 			QueryParameters: queryParams,
 			DefaultTimeout:  3000 * timepkg.Millisecond,
@@ -143,12 +143,12 @@ func (r *CompositeRecommendation) SendWithContext(ctx context.Context) (bindings
 	if err != nil {
 		return bindings.CompositeRecommendationResponse{}, err
 	}
-	return *(r.ApiRequest.Target.(*bindings.CompositeRecommendationResponse)), err
+	return *(r.Target.(*bindings.CompositeRecommendationResponse)), err
 }
 
 // Sends the request to the Recombee API
 func (r *CompositeRecommendation) Send() (bindings.CompositeRecommendationResponse, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), r.ApiRequest.DefaultTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), r.DefaultTimeout)
 	defer cancel()
 	return r.SendWithContext(ctx)
 }

@@ -5,9 +5,10 @@ package requests
 import (
 	"context"
 	"fmt"
-	"github.com/recombee/go-api-client/v6/recombee/bindings"
 	"net/http"
 	timepkg "time" // avoid collision with param name
+
+	"github.com/recombee/go-api-client/v6/recombee/bindings"
 )
 
 // SearchItems Full-text personalized search. The results are based on the provided `searchQuery` and also on the user's past interactions (purchases, ratings, etc.) with the items (items more suitable for the user are preferred in the results).
@@ -232,12 +233,12 @@ func (r *SearchItems) SendWithContext(ctx context.Context) (bindings.SearchRespo
 	if err != nil {
 		return bindings.SearchResponse{}, err
 	}
-	return *(r.ApiRequest.Target.(*bindings.SearchResponse)), err
+	return *(r.Target.(*bindings.SearchResponse)), err
 }
 
 // Sends the request to the Recombee API
 func (r *SearchItems) Send() (bindings.SearchResponse, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), r.ApiRequest.DefaultTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), r.DefaultTimeout)
 	defer cancel()
 	return r.SendWithContext(ctx)
 }

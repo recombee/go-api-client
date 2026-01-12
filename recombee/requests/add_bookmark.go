@@ -4,7 +4,6 @@ package requests
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	timepkg "time" // avoid collision with param name
 )
@@ -29,7 +28,7 @@ func NewAddBookmark(client ApiClient, userId string, itemId string) *AddBookmark
 	return &AddBookmark{
 		ApiRequest{
 			HttpMethod:      http.MethodPost,
-			Path:            fmt.Sprintf("/bookmarks/"),
+			Path:            "/bookmarks/",
 			BodyParameters:  bodyParameters,
 			QueryParameters: queryParams,
 			DefaultTimeout:  3000 * timepkg.Millisecond,
@@ -73,12 +72,12 @@ func (r *AddBookmark) SendWithContext(ctx context.Context) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return *(r.ApiRequest.Target.(*string)), err
+	return *(r.Target.(*string)), err
 }
 
 // Sends the request to the Recombee API
 func (r *AddBookmark) Send() (string, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), r.ApiRequest.DefaultTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), r.DefaultTimeout)
 	defer cancel()
 	return r.SendWithContext(ctx)
 }

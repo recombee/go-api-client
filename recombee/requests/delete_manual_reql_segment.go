@@ -42,12 +42,12 @@ func (r *DeleteManualReqlSegment) SendWithContext(ctx context.Context) (string, 
 	if err != nil {
 		return "", err
 	}
-	return *(r.ApiRequest.Target.(*string)), err
+	return *(r.Target.(*string)), err
 }
 
 // Sends the request to the Recombee API
 func (r *DeleteManualReqlSegment) Send() (string, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), r.ApiRequest.DefaultTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), r.DefaultTimeout)
 	defer cancel()
 	return r.SendWithContext(ctx)
 }

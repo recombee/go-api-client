@@ -5,9 +5,10 @@ package requests
 import (
 	"context"
 	"fmt"
-	"github.com/recombee/go-api-client/v6/recombee/bindings"
 	"net/http"
 	timepkg "time" // avoid collision with param name
+
+	"github.com/recombee/go-api-client/v6/recombee/bindings"
 )
 
 // ListUserRatings Lists all the ratings ever submitted by the given user.
@@ -43,12 +44,12 @@ func (r *ListUserRatings) SendWithContext(ctx context.Context) ([]bindings.Ratin
 	if err != nil {
 		return nil, err
 	}
-	return *(r.ApiRequest.Target.(*[]bindings.Rating)), err
+	return *(r.Target.(*[]bindings.Rating)), err
 }
 
 // Sends the request to the Recombee API
 func (r *ListUserRatings) Send() ([]bindings.Rating, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), r.ApiRequest.DefaultTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), r.DefaultTimeout)
 	defer cancel()
 	return r.SendWithContext(ctx)
 }

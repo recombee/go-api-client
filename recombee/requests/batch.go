@@ -3,9 +3,10 @@ package requests
 import (
 	"context"
 	"encoding/json"
-	"github.com/recombee/go-api-client/v6/recombee/bindings"
 	"net/http"
 	"time"
+
+	"github.com/recombee/go-api-client/v6/recombee/bindings"
 )
 
 // Batch allows you to submit arbitrary sequence of requests within a single HTTPS request.
@@ -103,7 +104,7 @@ func (r Batch) SendWithContext(ctx context.Context) ([]bindings.BatchResponse, e
 			return nil, err
 		}
 
-		rawResponses := *smallBatch.ApiRequest.Target.(*[]rawBatchResponse)
+		rawResponses := *smallBatch.Target.(*[]rawBatchResponse)
 		results := make([]bindings.BatchResponse, len(rawResponses))
 
 		for i, rawResponse := range rawResponses {
@@ -130,7 +131,7 @@ func (r Batch) SendWithContext(ctx context.Context) ([]bindings.BatchResponse, e
 
 // Sends the request to the Recombee API
 func (r Batch) Send() ([]bindings.BatchResponse, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), r.ApiRequest.DefaultTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), r.DefaultTimeout)
 	defer cancel()
 	return r.SendWithContext(ctx)
 }
