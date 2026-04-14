@@ -432,8 +432,26 @@ func (c *RecombeeClient) NewRecommendItemSegmentsToItemSegment(contextSegmentId 
 	return requests.NewRecommendItemSegmentsToItemSegment(c, contextSegmentId, targetUserId, count)
 }
 
+// NewRecommendNextItemSegments creates RecommendNextItemSegments request.
+// Returns Item segments that shall be shown to a user as next recommendations when the user e.g. scrolls the page down (*infinite scroll*) or goes to the next page.
+// It accepts `recommId` of a base recommendation request (e.g., request from the first page) and the number of segments that shall be returned (`count`).
+// The base request can be one of:
+//   - [Recommend Item Segments to Item](https://docs.recombee.com/api#recommend-item-segments-to-item)
+//   - [Recommend Item Segments to User](https://docs.recombee.com/api#recommend-item-segments-to-user)
+//   - [Recommend Item Segments to Item Segment](https://docs.recombee.com/api#recommend-item-segments-to-item-segment)
+//   - [Search Item Segments](https://docs.recombee.com/api#search-item-segments)
+//
+// All the other parameters are inherited from the base request.
+// *Recommend next Item segments* can be called many times for a single `recommId` and each call returns different (previously not recommended) segments.
+// The number of *Recommend next Item segments* calls performed so far is returned in the `numberNextRecommsCalls` field.
+// *Recommend next Item segments* can be requested up to 30 minutes after the base request or a previous *Recommend next Item segments* call.
+// For billing purposes, each call to *Recommend next Item segments* is counted as a separate recommendation request.
+func (c *RecombeeClient) NewRecommendNextItemSegments(recommId string, count int) *requests.RecommendNextItemSegments {
+	return requests.NewRecommendNextItemSegments(c, recommId, count)
+}
+
 // NewCompositeRecommendation creates CompositeRecommendation request.
-// Composite Recommendation returns both a *source entity* (e.g., an Item or [Item Segment](https://docs.recombee.com/segmentations.html)) and a list of related recommendations in a single response.
+// Composite Recommendation returns both a *source entity* (e.g., an Item or [Item Segment](https://docs.recombee.com/segmentations)) and a list of related recommendations in a single response.
 // It is ideal for use cases such as personalized homepage sections (*Articles from <category>*), *Because You Watched <movie>*, or *Artists Related to Your Favorite Artist <artist>*.
 // See detailed **examples and configuration guidance** in the [Composite Scenarios documentation](https://docs.recombee.com/scenarios#composite-recommendations).
 // **Structure**

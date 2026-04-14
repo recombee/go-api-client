@@ -10,7 +10,7 @@ import (
 	timepkg "time" // avoid collision with param name
 )
 
-// CompositeRecommendation Composite Recommendation returns both a *source entity* (e.g., an Item or [Item Segment](https://docs.recombee.com/segmentations.html)) and a list of related recommendations in a single response.
+// CompositeRecommendation Composite Recommendation returns both a *source entity* (e.g., an Item or [Item Segment](https://docs.recombee.com/segmentations)) and a list of related recommendations in a single response.
 // It is ideal for use cases such as personalized homepage sections (*Articles from <category>*), *Because You Watched <movie>*, or *Artists Related to Your Favorite Artist <artist>*.
 // See detailed **examples and configuration guidance** in the [Composite Scenarios documentation](https://docs.recombee.com/scenarios#composite-recommendations).
 // **Structure**
@@ -36,7 +36,7 @@ type CompositeRecommendation struct {
 }
 
 // NewCompositeRecommendation creates CompositeRecommendation request.
-// Composite Recommendation returns both a *source entity* (e.g., an Item or [Item Segment](https://docs.recombee.com/segmentations.html)) and a list of related recommendations in a single response.
+// Composite Recommendation returns both a *source entity* (e.g., an Item or [Item Segment](https://docs.recombee.com/segmentations)) and a list of related recommendations in a single response.
 // It is ideal for use cases such as personalized homepage sections (*Articles from <category>*), *Because You Watched <movie>*, or *Artists Related to Your Favorite Artist <artist>*.
 // See detailed **examples and configuration guidance** in the [Composite Scenarios documentation](https://docs.recombee.com/scenarios#composite-recommendations).
 // **Structure**
@@ -106,6 +106,13 @@ func (r *CompositeRecommendation) SetLogic(logic bindings.Logic) *CompositeRecom
 // ID of the segment from `contextSegmentationId` for which the recommendations are to be generated.
 func (r *CompositeRecommendation) SetSegmentId(segmentId string) *CompositeRecommendation {
 	r.BodyParameters["segmentId"] = segmentId
+	return r
+}
+
+// SetSearchQuery sets the searchQuery parameter.
+// Search query provided by the user. It is used for the full-text search. Only applicable if the *scenario* corresponds to a search scenario.
+func (r *CompositeRecommendation) SetSearchQuery(searchQuery string) *CompositeRecommendation {
+	r.BodyParameters["searchQuery"] = searchQuery
 	return r
 }
 
