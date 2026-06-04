@@ -4,6 +4,7 @@ package test
 
 import (
 	"context"
+	"github.com/recombee/go-api-client/v6/recombee/bindings"
 	"github.com/recombee/go-api-client/v6/recombee/requests"
 	"testing"
 )
@@ -13,6 +14,8 @@ func TestAddItemPropertyInBatch(t *testing.T) {
 	// it 'does not fail with valid name and type'
 	// it 'fails with invalid type'
 	// it 'really stores property to the system'
+	// it 'does not fail with valid property role and metadata'
+	// it 'fails with duplicate property role or invalid metadata'
 	client := createClient(t)
 	var resp2 interface{}
 	var err error
@@ -24,6 +27,10 @@ func TestAddItemPropertyInBatch(t *testing.T) {
 		client.NewAddItemProperty("prop", "integer"),
 		client.NewAddItemProperty("number2", "int"),
 		client.NewAddItemProperty("number2", "int"),
+		client.NewAddItemProperty("title", "string").SetRole(bindings.PropertyRole{Name: "title"}),
+		client.NewAddItemProperty("str4", "string").SetRole(bindings.PropertyRole{Name: "summary"}),
+		client.NewAddItemProperty("str4", "string").SetRole(bindings.PropertyRole{Name: "summary"}),
+		client.NewAddItemProperty("str5", "string").SetRole(bindings.PropertyRole{Name: "titl"}),
 	}
 
 	batchResponse, err := client.NewBatch(reqs).SendWithContext(context.Background())
@@ -36,4 +43,8 @@ func TestAddItemPropertyInBatch(t *testing.T) {
 	assertEqual(t, 400, batchResponse[2].StatusCode)
 	assertEqual(t, 201, batchResponse[3].StatusCode)
 	assertEqual(t, 409, batchResponse[4].StatusCode)
+	assertEqual(t, 201, batchResponse[5].StatusCode)
+	assertEqual(t, 201, batchResponse[6].StatusCode)
+	assertEqual(t, 409, batchResponse[7].StatusCode)
+	assertEqual(t, 404, batchResponse[8].StatusCode)
 }
