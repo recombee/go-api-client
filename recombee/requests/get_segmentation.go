@@ -5,9 +5,10 @@ package requests
 import (
 	"context"
 	"fmt"
-	"github.com/recombee/go-api-client/v6/recombee/bindings"
 	"net/http"
 	timepkg "time" // avoid collision with param name
+
+	"github.com/recombee/go-api-client/v6/recombee/bindings"
 )
 
 // GetSegmentation Get existing Segmentation.
@@ -43,12 +44,12 @@ func (r *GetSegmentation) SendWithContext(ctx context.Context) (bindings.Segment
 	if err != nil {
 		return bindings.Segmentation{}, err
 	}
-	return *(r.ApiRequest.Target.(*bindings.Segmentation)), err
+	return *(r.Target.(*bindings.Segmentation)), err
 }
 
 // Sends the request to the Recombee API
 func (r *GetSegmentation) Send() (bindings.Segmentation, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), r.ApiRequest.DefaultTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), r.DefaultTimeout)
 	defer cancel()
 	return r.SendWithContext(ctx)
 }

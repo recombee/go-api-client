@@ -4,7 +4,6 @@ package requests
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	timepkg "time" // avoid collision with param name
 )
@@ -30,7 +29,7 @@ func NewAddRating(client ApiClient, userId string, itemId string, rating float64
 	return &AddRating{
 		ApiRequest{
 			HttpMethod:      http.MethodPost,
-			Path:            fmt.Sprintf("/ratings/"),
+			Path:            "/ratings/",
 			BodyParameters:  bodyParameters,
 			QueryParameters: queryParams,
 			DefaultTimeout:  3000 * timepkg.Millisecond,
@@ -74,12 +73,12 @@ func (r *AddRating) SendWithContext(ctx context.Context) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return *(r.ApiRequest.Target.(*string)), err
+	return *(r.Target.(*string)), err
 }
 
 // Sends the request to the Recombee API
 func (r *AddRating) Send() (string, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), r.ApiRequest.DefaultTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), r.DefaultTimeout)
 	defer cancel()
 	return r.SendWithContext(ctx)
 }

@@ -4,7 +4,6 @@ package requests
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	timepkg "time" // avoid collision with param name
 )
@@ -29,7 +28,7 @@ func NewDeletePurchase(client ApiClient, userId string, itemId string) *DeletePu
 	return &DeletePurchase{
 		ApiRequest{
 			HttpMethod:      http.MethodDelete,
-			Path:            fmt.Sprintf("/purchases/"),
+			Path:            "/purchases/",
 			BodyParameters:  bodyParameters,
 			QueryParameters: queryParams,
 			DefaultTimeout:  3000 * timepkg.Millisecond,
@@ -52,12 +51,12 @@ func (r *DeletePurchase) SendWithContext(ctx context.Context) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return *(r.ApiRequest.Target.(*string)), err
+	return *(r.Target.(*string)), err
 }
 
 // Sends the request to the Recombee API
 func (r *DeletePurchase) Send() (string, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), r.ApiRequest.DefaultTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), r.DefaultTimeout)
 	defer cancel()
 	return r.SendWithContext(ctx)
 }

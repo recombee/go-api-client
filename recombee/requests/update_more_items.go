@@ -4,10 +4,10 @@ package requests
 
 import (
 	"context"
-	"fmt"
-	"github.com/recombee/go-api-client/v6/recombee/bindings"
 	"net/http"
 	timepkg "time" // avoid collision with param name
+
+	"github.com/recombee/go-api-client/v6/recombee/bindings"
 )
 
 // UpdateMoreItems Updates (some) property values of all the items that pass the filter.
@@ -46,7 +46,7 @@ func NewUpdateMoreItems(client ApiClient, filter string, changes map[string]inte
 	return &UpdateMoreItems{
 		ApiRequest{
 			HttpMethod:      http.MethodPost,
-			Path:            fmt.Sprintf("/more-items/"),
+			Path:            "/more-items/",
 			BodyParameters:  bodyParameters,
 			QueryParameters: queryParams,
 			DefaultTimeout:  100000 * timepkg.Millisecond,
@@ -62,12 +62,12 @@ func (r *UpdateMoreItems) SendWithContext(ctx context.Context) (bindings.UpdateM
 	if err != nil {
 		return bindings.UpdateMoreItemsResponse{}, err
 	}
-	return *(r.ApiRequest.Target.(*bindings.UpdateMoreItemsResponse)), err
+	return *(r.Target.(*bindings.UpdateMoreItemsResponse)), err
 }
 
 // Sends the request to the Recombee API
 func (r *UpdateMoreItems) Send() (bindings.UpdateMoreItemsResponse, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), r.ApiRequest.DefaultTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), r.DefaultTimeout)
 	defer cancel()
 	return r.SendWithContext(ctx)
 }

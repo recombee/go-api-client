@@ -5,9 +5,10 @@ package requests
 import (
 	"context"
 	"fmt"
-	"github.com/recombee/go-api-client/v6/recombee/bindings"
 	"net/http"
 	timepkg "time" // avoid collision with param name
+
+	"github.com/recombee/go-api-client/v6/recombee/bindings"
 )
 
 // ListItemBookmarks Lists all the ever-made bookmarks of the given item.
@@ -43,12 +44,12 @@ func (r *ListItemBookmarks) SendWithContext(ctx context.Context) ([]bindings.Boo
 	if err != nil {
 		return nil, err
 	}
-	return *(r.ApiRequest.Target.(*[]bindings.Bookmark)), err
+	return *(r.Target.(*[]bindings.Bookmark)), err
 }
 
 // Sends the request to the Recombee API
 func (r *ListItemBookmarks) Send() ([]bindings.Bookmark, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), r.ApiRequest.DefaultTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), r.DefaultTimeout)
 	defer cancel()
 	return r.SendWithContext(ctx)
 }

@@ -4,10 +4,10 @@ package requests
 
 import (
 	"context"
-	"fmt"
-	"github.com/recombee/go-api-client/v6/recombee/bindings"
 	"net/http"
 	timepkg "time" // avoid collision with param name
+
+	"github.com/recombee/go-api-client/v6/recombee/bindings"
 )
 
 // RecommendItemSegmentsToItemSegment Recommends Segments from a result [Segmentation](https://docs.recombee.com/segmentations) that are the most relevant to a particular Segment from a context Segmentation.
@@ -47,7 +47,7 @@ func NewRecommendItemSegmentsToItemSegment(client ApiClient, contextSegmentId st
 	return &RecommendItemSegmentsToItemSegment{
 		ApiRequest{
 			HttpMethod:      http.MethodPost,
-			Path:            fmt.Sprintf("/recomms/item-segments/item-segments/"),
+			Path:            "/recomms/item-segments/item-segments/",
 			BodyParameters:  bodyParameters,
 			QueryParameters: queryParams,
 			DefaultTimeout:  3000 * timepkg.Millisecond,
@@ -160,12 +160,12 @@ func (r *RecommendItemSegmentsToItemSegment) SendWithContext(ctx context.Context
 	if err != nil {
 		return bindings.RecommendationResponse{}, err
 	}
-	return *(r.ApiRequest.Target.(*bindings.RecommendationResponse)), err
+	return *(r.Target.(*bindings.RecommendationResponse)), err
 }
 
 // Sends the request to the Recombee API
 func (r *RecommendItemSegmentsToItemSegment) Send() (bindings.RecommendationResponse, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), r.ApiRequest.DefaultTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), r.DefaultTimeout)
 	defer cancel()
 	return r.SendWithContext(ctx)
 }

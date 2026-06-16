@@ -9,8 +9,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	errorspkg "github.com/recombee/go-api-client/v6/recombee/errors"
-	requestspkg "github.com/recombee/go-api-client/v6/recombee/requests"
 	"io"
 	"net"
 	"net/http"
@@ -18,6 +16,15 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	errorspkg "github.com/recombee/go-api-client/v6/recombee/errors"
+	requestspkg "github.com/recombee/go-api-client/v6/recombee/requests"
+)
+
+var (
+	ErrBothRegionAndBaseURI   = errors.New("you cannot specify both region and baseUri")
+	ErrUnknownRegion          = errors.New("unknown region specified")
+	ErrMissingRegionOrBaseURI = errors.New("you must specify either region or baseUri")
 )
 
 // RecombeeClient is a client for interacting with the Recombee API.
@@ -74,7 +81,7 @@ func NewRecombeeClientWithOptions(databaseId string, privateToken string, option
 
 	if options.Region != nil {
 		if baseUri != "" {
-			return nil, errors.New("You cannot specify both region and baseUri")
+			return nil, ErrBothRegionAndBaseURI
 		}
 
 		switch *options.Region {
@@ -87,15 +94,21 @@ func NewRecombeeClientWithOptions(databaseId string, privateToken string, option
 		case "us-west":
 			baseUri = "rapi-us-west.recombee.com"
 		default:
-			return nil, errors.New("Unknown region specified")
+			return nil, ErrUnknownRegion
 		}
 	}
 
 	if baseUri == "" {
-		return nil, errors.New("You must specify either region or baseUri")
+		return nil, ErrMissingRegionOrBaseURI
 	}
 
-	return &RecombeeClient{databaseId: databaseId, privateToken: privateToken, baseUri: baseUri, useHttpsByDefault: useHttpsByDefault, httpClient: httpClient}, nil
+	return &RecombeeClient{
+		databaseId:        databaseId,
+		privateToken:      privateToken,
+		baseUri:           baseUri,
+		useHttpsByDefault: useHttpsByDefault,
+		httpClient:        httpClient,
+	}, nil
 }
 
 // NewRecombeeClient creates a new instance of RecombeeClient with
@@ -134,7 +147,7 @@ func (c *RecombeeClient) signUrlStr(urlStr string) (string, error) {
 	return u.String() + "&hmac_sign=" + signature, nil
 }
 
-func (client *RecombeeClient) SendRequestWithContext(ctx context.Context, request *requestspkg.ApiRequest) error {
+func (client *RecombeeClient) SendRequestWithContext(ctx context.Context, request *requestspkg.ApiRequest) (err error) {
 
 	parsedUrl, err := url.Parse(request.Path)
 	if err != nil {
@@ -192,7 +205,12 @@ func (client *RecombeeClient) SendRequestWithContext(ctx context.Context, reques
 		}
 		return err
 	}
-	defer response.Body.Close()
+	defer func() {
+		closeErr := response.Body.Close()
+		if closeErr != nil && err == nil {
+			err = closeErr
+		}
+	}()
 
 	bodyBytes, err := io.ReadAll(response.Body)
 	if err != nil {
@@ -207,7 +225,7 @@ func (client *RecombeeClient) SendRequestWithContext(ctx context.Context, reques
 
 	// Decode the response body into the target if not nil
 	if request.Target != nil {
-		if err := json.Unmarshal(bodyBytes, request.Target); err != nil {
+		if err = json.Unmarshal(bodyBytes, request.Target); err != nil {
 			return err
 		}
 	}

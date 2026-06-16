@@ -42,12 +42,12 @@ func (r *GetUserValues) SendWithContext(ctx context.Context) (map[string]interfa
 	if err != nil {
 		return map[string]interface{}{}, err
 	}
-	return *(r.ApiRequest.Target.(*map[string]interface{})), err
+	return *(r.Target.(*map[string]interface{})), err
 }
 
 // Sends the request to the Recombee API
 func (r *GetUserValues) Send() (map[string]interface{}, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), r.ApiRequest.DefaultTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), r.DefaultTimeout)
 	defer cancel()
 	return r.SendWithContext(ctx)
 }

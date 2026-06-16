@@ -5,9 +5,10 @@ package requests
 import (
 	"context"
 	"fmt"
-	"github.com/recombee/go-api-client/v6/recombee/bindings"
 	"net/http"
 	timepkg "time" // avoid collision with param name
+
+	"github.com/recombee/go-api-client/v6/recombee/bindings"
 )
 
 // RecommendItemsToUser Based on the user's past interactions (purchases, ratings, etc.) with the items, recommends top-N items that are most likely to be of high value for the given user.
@@ -257,12 +258,12 @@ func (r *RecommendItemsToUser) SendWithContext(ctx context.Context) (bindings.Re
 	if err != nil {
 		return bindings.RecommendationResponse{}, err
 	}
-	return *(r.ApiRequest.Target.(*bindings.RecommendationResponse)), err
+	return *(r.Target.(*bindings.RecommendationResponse)), err
 }
 
 // Sends the request to the Recombee API
 func (r *RecommendItemsToUser) Send() (bindings.RecommendationResponse, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), r.ApiRequest.DefaultTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), r.DefaultTimeout)
 	defer cancel()
 	return r.SendWithContext(ctx)
 }

@@ -2,6 +2,7 @@ package errors
 
 import (
 	"fmt"
+
 	"github.com/recombee/go-api-client/v6/recombee/requests"
 )
 

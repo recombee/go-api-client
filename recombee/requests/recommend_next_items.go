@@ -5,9 +5,10 @@ package requests
 import (
 	"context"
 	"fmt"
-	"github.com/recombee/go-api-client/v6/recombee/bindings"
 	"net/http"
 	timepkg "time" // avoid collision with param name
+
+	"github.com/recombee/go-api-client/v6/recombee/bindings"
 )
 
 // RecommendNextItems Returns items that shall be shown to a user as next recommendations when the user e.g. scrolls the page down (*infinite scroll*) or goes to the next page.
@@ -69,12 +70,12 @@ func (r *RecommendNextItems) SendWithContext(ctx context.Context) (bindings.Reco
 	if err != nil {
 		return bindings.RecommendationResponse{}, err
 	}
-	return *(r.ApiRequest.Target.(*bindings.RecommendationResponse)), err
+	return *(r.Target.(*bindings.RecommendationResponse)), err
 }
 
 // Sends the request to the Recombee API
 func (r *RecommendNextItems) Send() (bindings.RecommendationResponse, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), r.ApiRequest.DefaultTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), r.DefaultTimeout)
 	defer cancel()
 	return r.SendWithContext(ctx)
 }

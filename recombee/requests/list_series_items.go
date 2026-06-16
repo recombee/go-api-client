@@ -5,9 +5,10 @@ package requests
 import (
 	"context"
 	"fmt"
-	"github.com/recombee/go-api-client/v6/recombee/bindings"
 	"net/http"
 	timepkg "time" // avoid collision with param name
+
+	"github.com/recombee/go-api-client/v6/recombee/bindings"
 )
 
 // ListSeriesItems Lists all the items present in the given series, sorted according to their time index values.
@@ -43,12 +44,12 @@ func (r *ListSeriesItems) SendWithContext(ctx context.Context) ([]bindings.Serie
 	if err != nil {
 		return nil, err
 	}
-	return *(r.ApiRequest.Target.(*[]bindings.SeriesItem)), err
+	return *(r.Target.(*[]bindings.SeriesItem)), err
 }
 
 // Sends the request to the Recombee API
 func (r *ListSeriesItems) Send() ([]bindings.SeriesItem, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), r.ApiRequest.DefaultTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), r.DefaultTimeout)
 	defer cancel()
 	return r.SendWithContext(ctx)
 }

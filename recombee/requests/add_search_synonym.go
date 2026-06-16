@@ -4,10 +4,10 @@ package requests
 
 import (
 	"context"
-	"fmt"
-	"github.com/recombee/go-api-client/v6/recombee/bindings"
 	"net/http"
 	timepkg "time" // avoid collision with param name
+
+	"github.com/recombee/go-api-client/v6/recombee/bindings"
 )
 
 // AddSearchSynonym Adds a new synonym for the [Search items](https://docs.recombee.com/api#search-items).
@@ -36,7 +36,7 @@ func NewAddSearchSynonym(client ApiClient, term string, synonym string) *AddSear
 	return &AddSearchSynonym{
 		ApiRequest{
 			HttpMethod:      http.MethodPost,
-			Path:            fmt.Sprintf("/synonyms/items/"),
+			Path:            "/synonyms/items/",
 			BodyParameters:  bodyParameters,
 			QueryParameters: queryParams,
 			DefaultTimeout:  10000 * timepkg.Millisecond,
@@ -60,12 +60,12 @@ func (r *AddSearchSynonym) SendWithContext(ctx context.Context) (bindings.Search
 	if err != nil {
 		return bindings.SearchSynonym{}, err
 	}
-	return *(r.ApiRequest.Target.(*bindings.SearchSynonym)), err
+	return *(r.Target.(*bindings.SearchSynonym)), err
 }
 
 // Sends the request to the Recombee API
 func (r *AddSearchSynonym) Send() (bindings.SearchSynonym, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), r.ApiRequest.DefaultTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), r.DefaultTimeout)
 	defer cancel()
 	return r.SendWithContext(ctx)
 }

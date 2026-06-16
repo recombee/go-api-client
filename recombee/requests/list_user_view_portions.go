@@ -5,9 +5,10 @@ package requests
 import (
 	"context"
 	"fmt"
-	"github.com/recombee/go-api-client/v6/recombee/bindings"
 	"net/http"
 	timepkg "time" // avoid collision with param name
+
+	"github.com/recombee/go-api-client/v6/recombee/bindings"
 )
 
 // ListUserViewPortions Lists all the view portions ever submitted by the given user.
@@ -43,12 +44,12 @@ func (r *ListUserViewPortions) SendWithContext(ctx context.Context) ([]bindings.
 	if err != nil {
 		return nil, err
 	}
-	return *(r.ApiRequest.Target.(*[]bindings.ViewPortion)), err
+	return *(r.Target.(*[]bindings.ViewPortion)), err
 }
 
 // Sends the request to the Recombee API
 func (r *ListUserViewPortions) Send() ([]bindings.ViewPortion, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), r.ApiRequest.DefaultTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), r.DefaultTimeout)
 	defer cancel()
 	return r.SendWithContext(ctx)
 }

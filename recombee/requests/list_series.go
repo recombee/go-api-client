@@ -4,10 +4,10 @@ package requests
 
 import (
 	"context"
-	"fmt"
-	"github.com/recombee/go-api-client/v6/recombee/bindings"
 	"net/http"
 	timepkg "time" // avoid collision with param name
+
+	"github.com/recombee/go-api-client/v6/recombee/bindings"
 )
 
 // ListSeries Gets the list of all the series currently present in the database.
@@ -27,7 +27,7 @@ func NewListSeries(client ApiClient) *ListSeries {
 	return &ListSeries{
 		ApiRequest{
 			HttpMethod:      http.MethodGet,
-			Path:            fmt.Sprintf("/series/list/"),
+			Path:            "/series/list/",
 			BodyParameters:  bodyParameters,
 			QueryParameters: queryParams,
 			DefaultTimeout:  100000 * timepkg.Millisecond,
@@ -43,12 +43,12 @@ func (r *ListSeries) SendWithContext(ctx context.Context) ([]bindings.Series, er
 	if err != nil {
 		return nil, err
 	}
-	return *(r.ApiRequest.Target.(*[]bindings.Series)), err
+	return *(r.Target.(*[]bindings.Series)), err
 }
 
 // Sends the request to the Recombee API
 func (r *ListSeries) Send() ([]bindings.Series, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), r.ApiRequest.DefaultTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), r.DefaultTimeout)
 	defer cancel()
 	return r.SendWithContext(ctx)
 }

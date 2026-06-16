@@ -4,10 +4,10 @@ package requests
 
 import (
 	"context"
-	"fmt"
-	"github.com/recombee/go-api-client/v6/recombee/bindings"
 	"net/http"
 	timepkg "time" // avoid collision with param name
+
+	"github.com/recombee/go-api-client/v6/recombee/bindings"
 )
 
 // DeleteMoreItems Deletes all the items that pass the filter.
@@ -31,7 +31,7 @@ func NewDeleteMoreItems(client ApiClient, filter string) *DeleteMoreItems {
 	return &DeleteMoreItems{
 		ApiRequest{
 			HttpMethod:      http.MethodDelete,
-			Path:            fmt.Sprintf("/more-items/"),
+			Path:            "/more-items/",
 			BodyParameters:  bodyParameters,
 			QueryParameters: queryParams,
 			DefaultTimeout:  100000 * timepkg.Millisecond,
@@ -47,12 +47,12 @@ func (r *DeleteMoreItems) SendWithContext(ctx context.Context) (bindings.DeleteM
 	if err != nil {
 		return bindings.DeleteMoreItemsResponse{}, err
 	}
-	return *(r.ApiRequest.Target.(*bindings.DeleteMoreItemsResponse)), err
+	return *(r.Target.(*bindings.DeleteMoreItemsResponse)), err
 }
 
 // Sends the request to the Recombee API
 func (r *DeleteMoreItems) Send() (bindings.DeleteMoreItemsResponse, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), r.ApiRequest.DefaultTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), r.DefaultTimeout)
 	defer cancel()
 	return r.SendWithContext(ctx)
 }

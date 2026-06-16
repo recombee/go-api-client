@@ -4,10 +4,10 @@ package requests
 
 import (
 	"context"
-	"fmt"
-	"github.com/recombee/go-api-client/v6/recombee/bindings"
 	"net/http"
 	timepkg "time" // avoid collision with param name
+
+	"github.com/recombee/go-api-client/v6/recombee/bindings"
 )
 
 // ListScenarios Get all [Scenarios](https://docs.recombee.com/scenarios) of the given database.
@@ -27,7 +27,7 @@ func NewListScenarios(client ApiClient) *ListScenarios {
 	return &ListScenarios{
 		ApiRequest{
 			HttpMethod:      http.MethodGet,
-			Path:            fmt.Sprintf("/scenarios/"),
+			Path:            "/scenarios/",
 			BodyParameters:  bodyParameters,
 			QueryParameters: queryParams,
 			DefaultTimeout:  10000 * timepkg.Millisecond,
@@ -43,12 +43,12 @@ func (r *ListScenarios) SendWithContext(ctx context.Context) ([]bindings.Scenari
 	if err != nil {
 		return nil, err
 	}
-	return *(r.ApiRequest.Target.(*[]bindings.Scenario)), err
+	return *(r.Target.(*[]bindings.Scenario)), err
 }
 
 // Sends the request to the Recombee API
 func (r *ListScenarios) Send() ([]bindings.Scenario, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), r.ApiRequest.DefaultTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), r.DefaultTimeout)
 	defer cancel()
 	return r.SendWithContext(ctx)
 }

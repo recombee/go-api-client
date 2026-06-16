@@ -1,0 +1,7 @@
+version: "2"
+
+linters:
+  disable-all: true
+  exclusions:
+    paths:
+      - examples

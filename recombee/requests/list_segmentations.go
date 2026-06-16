@@ -4,10 +4,10 @@ package requests
 
 import (
 	"context"
-	"fmt"
-	"github.com/recombee/go-api-client/v6/recombee/bindings"
 	"net/http"
 	timepkg "time" // avoid collision with param name
+
+	"github.com/recombee/go-api-client/v6/recombee/bindings"
 )
 
 // ListSegmentations Return all existing items Segmentations.
@@ -29,7 +29,7 @@ func NewListSegmentations(client ApiClient, sourceType string) *ListSegmentation
 	return &ListSegmentations{
 		ApiRequest{
 			HttpMethod:      http.MethodGet,
-			Path:            fmt.Sprintf("/segmentations/list/"),
+			Path:            "/segmentations/list/",
 			BodyParameters:  bodyParameters,
 			QueryParameters: queryParams,
 			DefaultTimeout:  10000 * timepkg.Millisecond,
@@ -45,12 +45,12 @@ func (r *ListSegmentations) SendWithContext(ctx context.Context) (bindings.ListS
 	if err != nil {
 		return bindings.ListSegmentationsResponse{}, err
 	}
-	return *(r.ApiRequest.Target.(*bindings.ListSegmentationsResponse)), err
+	return *(r.Target.(*bindings.ListSegmentationsResponse)), err
 }
 
 // Sends the request to the Recombee API
 func (r *ListSegmentations) Send() (bindings.ListSegmentationsResponse, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), r.ApiRequest.DefaultTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), r.DefaultTimeout)
 	defer cancel()
 	return r.SendWithContext(ctx)
 }

@@ -4,10 +4,10 @@ package requests
 
 import (
 	"context"
-	"fmt"
-	"github.com/recombee/go-api-client/v6/recombee/bindings"
 	"net/http"
 	timepkg "time" // avoid collision with param name
+
+	"github.com/recombee/go-api-client/v6/recombee/bindings"
 )
 
 // ListItems Gets a list of IDs of items currently present in the catalog.
@@ -27,7 +27,7 @@ func NewListItems(client ApiClient) *ListItems {
 	return &ListItems{
 		ApiRequest{
 			HttpMethod:      http.MethodGet,
-			Path:            fmt.Sprintf("/items/list/"),
+			Path:            "/items/list/",
 			BodyParameters:  bodyParameters,
 			QueryParameters: queryParams,
 			DefaultTimeout:  100000 * timepkg.Millisecond,
@@ -116,12 +116,12 @@ func (r *ListItems) SendWithContext(ctx context.Context) ([]bindings.Item, error
 	if err != nil {
 		return nil, err
 	}
-	return *(r.ApiRequest.Target.(*[]bindings.Item)), err
+	return *(r.Target.(*[]bindings.Item)), err
 }
 
 // Sends the request to the Recombee API
 func (r *ListItems) Send() ([]bindings.Item, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), r.ApiRequest.DefaultTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), r.DefaultTimeout)
 	defer cancel()
 	return r.SendWithContext(ctx)
 }
